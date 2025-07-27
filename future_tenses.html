@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Future Tenses Explained</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --secondary: #ec4899;
+      --accent: #f59e0b;
+      --success: #10b981;
+      --danger: #ef4444;
+      --dark: #0f172a;
+      --darker: #020617;
+      --light: #f8fafc;
+      --glass: rgba(255, 255, 255, 0.1);
+      --glass-border: rgba(255, 255, 255, 0.2);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 25px 50px rgba(0, 0, 0, 0.15);
+      --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--darker);
+      color: var(--light);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
+      animation: backgroundShift 20s ease-in-out infinite;
+      z-index: -1;
+    }
+    @keyframes backgroundShift {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.1) rotate(1deg); }
+    }
+    .particles { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1; }
+    .particle {
+      position: absolute; width: 4px; height: 4px; background: var(--primary); border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.7; }
+      50% { transform: translateY(-20px) rotate(180deg); opacity: 1; }
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 1rem 3rem 1rem;
+      position: relative;
+      z-index: 1;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .title {
+      font-size: clamp(2.2rem, 7vw, 3.5rem);
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientShift 3s ease-in-out infinite;
+      margin-bottom: 0.7rem;
+      letter-spacing: -0.02em;
+    }
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    .subtitle {
+      font-size: 1.15rem;
+      color: rgba(248, 250, 252, 0.8);
+      font-weight: 400;
+      margin-bottom: 2.5rem;
+    }
+    .nav-link {
+      display: inline-block;
+      margin-bottom: 2.5rem;
+      color: var(--primary);
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 50px;
+      padding: 0.7rem 1.7rem;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(10px);
+    }
+    .nav-link:hover {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+    .tense-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.2rem;
+    }
+    .tense-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 2.2rem 1.5rem 2rem 1.5rem;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      animation: fadeIn 0.7s cubic-bezier(.7,-0.2,.5,1.5);
+    }
+    .tense-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary);
+    }
+    .tense-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.7rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .tense-title::before {
+      content: '';
+      width: 4px;
+      height: 20px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+    .tense-section {
+      margin-bottom: 1.1rem;
+    }
+    .tense-section strong {
+      color: var(--accent);
+    }
+    .tense-section em {
+      color: var(--secondary);
+      font-style: normal;
+      font-weight: 600;
+    }
+    .examples {
+      margin-top: 0.7rem;
+      margin-bottom: 0.7rem;
+      padding-left: 1.2rem;
+    }
+    .examples li {
+      margin-bottom: 0.4rem;
+      line-height: 1.6;
+    }
+    .explanation-th {
+      margin-top: 1.2rem;
+      background: rgba(255,255,255,0.07);
+      border-left: 4px solid var(--secondary);
+      border-radius: 12px;
+      padding: 1.1rem 1.2rem 1.1rem 1.5rem;
+      color: #ffe0e6;
+      font-size: 1.05rem;
+      font-weight: 500;
+      box-shadow: 0 2px 12px #ec489933;
+    }
+    mark {
+      background: linear-gradient(120deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 0.2rem 0.4rem;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+    @media (max-width: 600px) {
+      .container { padding: 1rem 0.2rem 2rem 0.2rem; }
+      .tense-card { padding: 1.2rem 0.7rem 1.2rem 0.7rem; }
+      .tense-title { font-size: 1.1rem; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--primary-dark); }
+  </style>
+</head>
+<body>
+  <div class="particles" id="particles"></div>
+  <div class="container">
+    <header class="header">
+      <h1 class="title">Future Tenses in English</h1>
+      <p class="subtitle">A sleek, student-friendly guide to understanding future tenses (with Thai translation)</p>
+      <a href="index.html" class="nav-link">&#8592; Back to Main</a>
+    </header>
+    <main class="tense-grid">
+      <!-- Simple Future -->
+      <section class="tense-card">
+        <div class="tense-title">1. Talking about the Future (Simple Future)</div>
+        <div class="tense-section">
+          <strong>How to use:</strong> Use <mark>will</mark> before the action, or <mark>going to</mark> for plans you have already made.
+        </div>
+        <ul class="examples">
+          <li>I <mark>will go</mark> to the cinema tomorrow. <span style="color:#aaa">(A simple future action)</span></li>
+          <li>She <mark>will be</mark> a doctor when she grows up. <span style="color:#aaa">(A prediction about the future)</span></li>
+          <li>It looks cloudy. I think it <mark>is going to rain</mark>. <span style="color:#aaa">(Prediction based on what you see)</span></li>
+          <li>I <mark>am going to travel</mark> to London next year. <span style="color:#aaa">(You have already planned this)</span></li>
+        </ul>
+        <div class="explanation-th">
+          <strong>คำอธิบาย (ไทย):</strong><br>
+          นี่เป็นวิธีที่ใช้บ่อยที่สุดในการพูดถึงสิ่งที่กำลังจะเกิดขึ้น<br>
+          <strong>วิธีใช้:</strong> ใช้ <mark>will</mark> (จะ) วางไว้หน้าคำกริยา หรือ <mark>going to</mark> (กำลังจะ) สำหรับแผนที่ตัดสินใจไว้แล้ว<br>
+          <ul class="examples">
+            <li>I <mark>will go</mark> to the cinema tomorrow. (ฉัน <mark>จะไป</mark>ดูหนังวันพรุ่งนี้)</li>
+            <li>She <mark>will be</mark> a doctor when she grows up. (เธอ <mark>จะเป็น</mark>หมอเมื่อโตขึ้น)</li>
+            <li>It looks cloudy. I think it <mark>is going to rain</mark>. (ดูเมฆเยอะจัง ฉันว่าฝน <mark>กำลังจะตก</mark>แน่ๆ)</li>
+            <li>I <mark>am going to travel</mark> to London next year. (ฉัน <mark>กำลังจะไป</mark>เที่ยวลอนดอนปีหน้า)</li>
+          </ul>
+        </div>
+      </section>
+      <!-- Future Continuous -->
+      <section class="tense-card">
+        <div class="tense-title">2. Future Continuous</div>
+        <div class="tense-section">
+          <strong>How to use:</strong> <mark>will + be + (action word + ing)</mark>.<br>
+          <em>Use this to talk about an action that will be happening in the middle of a specific moment in the future.</em>
+        </div>
+        <ul class="examples">
+          <li>Don't call me at 8 PM tonight. I <mark>will be watching</mark> a movie.</li>
+          <li>This time next month, I <mark>will be relaxing</mark> on a beach.</li>
+          <li>When you arrive at the party, we <mark>will be dancing</mark>.</li>
+        </ul>
+        <div class="explanation-th">
+          <strong>คำอธิบาย (ไทย):</strong><br>
+          ใช้พูดถึงเหตุการณ์ที่ <mark>กำลังจะเกิดขึ้นอยู่</mark> ณ ช่วงเวลาใดเวลาหนึ่งในอนาคต<br>
+          <strong>วิธีใช้:</strong> <mark>will + be + (คำกริยา + ing)</mark><br>
+          <ul class="examples">
+            <li>Don't call me at 8 PM tonight. I <mark>will be watching</mark> a movie. (คืนนี้อย่าโทรมาตอน 2 ทุ่มนะ ฉัน <mark>จะกำลังดู</mark>หนังอยู่)</li>
+            <li>This time next month, I <mark>will be relaxing</mark> on a beach. (เวลานี้ในเดือนหน้า ฉัน <mark>จะกำลังพักผ่อน</mark>อยู่บนชายหาด)</li>
+            <li>When you arrive at the party, we <mark>will be dancing</mark>. (เมื่อเธอมาถึงงานปาร์ตี้ พวกเรา <mark>จะกำลังเต้น</mark>กันอยู่)</li>
+          </ul>
+        </div>
+      </section>
+      <!-- Future Perfect Simple -->
+      <section class="tense-card">
+        <div class="tense-title">3. Future Perfect Simple</div>
+        <div class="tense-section">
+          <strong>How to use:</strong> <mark>will + have + (the past form of the action word)</mark>.<br>
+          <em>Use this to talk about an action that will be finished or completed before a certain time in the future.</em><br>
+          <span style="color:#aaa">Keywords: by, by the time, before</span>
+        </div>
+        <ul class="examples">
+          <li>By 10 PM, I <mark>will have finished</mark> my homework.</li>
+          <li>By the time you wake up, I <mark>will have already eaten</mark> breakfast.</li>
+          <li>In three years, she <mark>will have graduated</mark> from university.</li>
+        </ul>
+        <div class="explanation-th">
+          <strong>คำอธิบาย (ไทย):</strong><br>
+          ใช้พูดถึงเหตุการณ์ที่จะ <mark>ทำเสร็จ</mark> หรือ <mark>สิ้นสุดลงแล้ว</mark> ก่อนเวลาที่กำหนดในอนาคต<br>
+          <strong>วิธีใช้:</strong> <mark>will + have + (คำกริยาช่อง 3)</mark><br>
+          <span style="color:#aaa">คำที่มักจะเจอ: by (ก่อน), by the time (เมื่อถึงเวลา), before (ก่อน)</span>
+          <ul class="examples">
+            <li>By 10 PM, I <mark>will have finished</mark> my homework. (ก่อน 4 ทุ่ม ฉัน <mark>จะทำการบ้านเสร็จแล้ว</mark>)</li>
+            <li>By the time you wake up, I <mark>will have already eaten</mark> breakfast. (กว่าเธอจะตื่น ฉันก็ <mark>จะกิน</mark>ข้าวเช้า <mark>เสร็จแล้ว</mark>)</li>
+            <li>In three years, she <mark>will have graduated</mark> from university. (ในอีก 3 ปี เธอ <mark>จะเรียนจบ</mark>จากมหาวิทยาลัย <mark>แล้ว</mark>)</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script>
+    // Floating particles
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = 40;
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 6 + 's';
+        particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+        particlesContainer.appendChild(particle);
+      }
+    }
+    document.addEventListener('DOMContentLoaded', createParticles);
+  </script>
+</body>
+</html> 
