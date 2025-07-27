@@ -5,293 +5,681 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dictation Girl - English to Thai</title>
   <style>
-    body {
-      background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-      color: #222;
-      font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+    
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --secondary: #ec4899;
+      --accent: #f59e0b;
+      --success: #10b981;
+      --danger: #ef4444;
+      --dark: #0f172a;
+      --darker: #020617;
+      --light: #f8fafc;
+      --glass: rgba(255, 255, 255, 0.1);
+      --glass-border: rgba(255, 255, 255, 0.2);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 25px 50px rgba(0, 0, 0, 0.15);
+      --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    }
+
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--darker);
+      color: var(--light);
+      overflow-x: hidden;
       min-height: 100vh;
-    }
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 40px 20px 80px 20px;
-    }
-    h1 {
-      text-align: center;
-      color: #ff4e50;
-      font-size: 2.7rem;
-      margin-bottom: 0.3em;
-      letter-spacing: 2px;
-      font-weight: 800;
-      text-shadow: 2px 2px 0 #fff7, 0 2px 8px #ff4e5090;
-    }
-    h2 {
-      text-align: center;
-      color: #ff4e50;
-      font-size: 1.3rem;
-      margin-bottom: 2em;
-      font-weight: 500;
-    }
-    .columns {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 32px;
-      justify-content: center;
-    }
-    .column {
-      flex: 1 1 220px;
-      min-width: 220px;
-      max-width: 260px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      background: rgba(255,255,255,0.7);
-      border-radius: 24px;
-      padding: 18px 12px 24px 12px;
-      box-shadow: 0 2px 16px #ff4e5022;
-    }
-    .column h3 {
-      color: #ff4e50;
-      font-size: 1.1rem;
-      margin-bottom: 10px;
-      text-align: center;
-      font-weight: 700;
-      letter-spacing: 1px;
-    }
-    .word {
-      background: linear-gradient(90deg, #ffb199 0%, #ff0844 100%);
-      border-radius: 18px;
-      padding: 12px 0;
-      margin: 0 0 2px 0;
-      font-size: 1.15rem;
-      cursor: pointer;
       position: relative;
-      transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
-      border: none;
-      text-align: center;
-      color: #fff;
-      font-weight: 600;
-      box-shadow: 0 2px 8px #ff4e5040;
-      outline: none;
-      user-select: none;
-      /* For fade/scale animation */
-      transition-property: transform, box-shadow, background, color, opacity;
-      transition-duration: 0.18s, 0.18s, 0.18s, 0.18s, 0.45s;
-      transition-timing-function: cubic-bezier(.7,-0.2,.5,1.5);
-      opacity: 1;
     }
-    .word.fading {
-       opacity: 0;
-       transform: scale(0.85) rotate(-2deg);
-       transition-duration: 0.45s;
-    }
-    .word:hover, .word:focus {
-      transform: scale(1.09) rotate(-2deg);
-      background: linear-gradient(90deg, #ff0844 0%, #ffb199 100%);
-      box-shadow: 0 6px 24px #ff4e5090;
-      z-index: 2;
-    }
-    @media (max-width: 900px) {
-      .columns {
-        flex-direction: column;
-        align-items: center;
-      }
-      .column {
-        max-width: 100%;
-      }
-    }
-    /* Floating sentence styles */
-    #example-sentence {
-      display: none;
+
+    /* Animated background */
+    body::before {
+      content: '';
       position: fixed;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%) scale(0.95);
-      min-width: 320px;
-      max-width: 90vw;
-      background: linear-gradient(120deg, #fff 60%, #ffe0e6 100%);
-      color: #ff0844;
-      border-radius: 24px;
-      box-shadow: 0 8px 40px #ff4e5040, 0 2px 8px #ffb19980;
-      padding: 36px 32px 32px 32px;
-      font-size: 1.45rem;
-      font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
-      font-weight: 600;
-      text-align: center;
-      z-index: 1000;
-      animation: popIn 0.25s cubic-bezier(.7,-0.2,.5,1.5);
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
+      animation: backgroundShift 20s ease-in-out infinite;
+      z-index: -1;
     }
-    #example-sentence.show {
-      display: block;
-      animation: popIn 0.25s cubic-bezier(.7,-0.2,.5,1.5);
+
+    @keyframes backgroundShift {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.1) rotate(1deg); }
     }
-    @keyframes popIn {
-      0% { opacity: 0; transform: translate(-50%, -60%) scale(0.8); }
-      100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+
+    /* Floating particles */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
     }
-    #close-btn {
+
+    .particle {
       position: absolute;
-      top: 10px;
-      right: 18px;
+      width: 4px;
+      height: 4px;
+      background: var(--primary);
+      border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.7; }
+      50% { transform: translateY(-20px) rotate(180deg); opacity: 1; }
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 4rem;
+      position: relative;
+    }
+
+    .title {
+      font-size: clamp(2.5rem, 8vw, 4rem);
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientShift 3s ease-in-out infinite;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      color: rgba(248, 250, 252, 0.8);
+      font-weight: 400;
+      margin-bottom: 3rem;
+    }
+
+    /* Navigation */
+    .nav-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-tab {
+      padding: 0.75rem 1.5rem;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 50px;
+      color: var(--light);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-tab::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .nav-tab:hover::before {
+      left: 100%;
+    }
+
+    .nav-tab:hover,
+    .nav-tab.active {
+      background: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* Grid Layout */
+    .word-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .category-section {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 2rem;
+      backdrop-filter: blur(20px);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .category-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    }
+
+    .category-section:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary);
+    }
+
+    .category-title {
       font-size: 1.3rem;
-      color: #ff4e50;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .category-title::before {
+      content: '';
+      width: 4px;
+      height: 20px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+
+    .words-container {
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .word-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 1rem 1.25rem;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      font-weight: 500;
+      font-size: 1rem;
+      text-align: center;
+    }
+
+    .word-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.5s;
+    }
+
+    .word-card:hover::before {
+      left: 100%;
+    }
+
+    .word-card:hover {
+      background: var(--primary);
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+      border-color: var(--primary);
+    }
+
+    .word-card.fading {
+      opacity: 0;
+      transform: scale(0.95);
+      transition: all 0.3s ease;
+    }
+
+    /* Modal */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .modal.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 3rem;
+      max-width: 600px;
+      width: 90%;
+      position: relative;
+      backdrop-filter: blur(20px);
+      transform: scale(0.9);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .modal.show .modal-content {
+      transform: scale(1);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
       background: none;
       border: none;
+      color: var(--light);
+      font-size: 1.5rem;
       cursor: pointer;
-      font-weight: 700;
-      transition: color 0.15s;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
     }
-    #close-btn:hover {
-      color: #ff0844;
+
+    .modal-close:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: rotate(90deg);
     }
+
+    .example-sentence {
+      font-size: 1.25rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      color: var(--light);
+    }
+
+    .example-translation {
+      font-size: 1.1rem;
+      line-height: 1.5;
+      color: rgba(248, 250, 252, 0.8);
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
     mark {
-      background: #ffb199;
-      color: #ff0844;
-      border-radius: 8px;
-      padding: 2px 6px;
-      font-weight: 700;
+      background: linear-gradient(120deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 0.2rem 0.4rem;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+      
+      .nav-tabs {
+        gap: 0.5rem;
+      }
+      
+      .nav-tab {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+      }
+      
+      .word-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      
+      .category-section {
+        padding: 1.5rem;
+      }
+      
+      .modal-content {
+        padding: 2rem;
+        margin: 1rem;
+      }
+    }
+
+    /* Loading animation */
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: var(--primary);
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--primary-dark);
     }
   </style>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
+  <!-- Animated particles -->
+  <div class="particles" id="particles"></div>
+
   <div class="container">
-    <h1>PUT YOUR MIND, REMEMBER<br>DICTATION GIRLLL!!!</h1>
-    <h2>คลิกที่คำศัพท์เพื่อดูตัวอย่างประโยคภาษาอังกฤษ</h2>
-    <div class="columns">
-      <div class="column">
-        <h3>General & Emotions</h3>
-        <div class="word" data-en="copies" data-th="สำเนา" data-example="She made several <mark>copies</mark> of the document." data-th-example="เธอถ่าย<mark>สำเนา</mark>เอกสารหลายชุด">copies</div>
-        <div class="word" data-en="criticism" data-th="คำวิจารณ์" data-example="He accepted the <mark>criticism</mark> and improved his work." data-th-example="เขายอมรับ<mark>คำวิจารณ์</mark>และปรับปรุงงานของเขา">criticism</div>
-        <div class="word" data-en="definitely" data-th="แน่นอน" data-example="I will <mark>definitely</mark> join the meeting tomorrow." data-th-example="ฉันจะเข้าร่วมประชุมพรุ่งนี้อย่าง<mark>แน่นอน</mark>">definitely</div>
-        <div class="word" data-en="enjoyed" data-th="สนุก" data-example="She <mark>enjoyed</mark> the movie a lot." data-th-example="เธอ<mark>สนุก</mark>กับภาพยนตร์มาก">enjoyed</div>
-        <div class="word" data-en="everyone" data-th="ทุกคน" data-example="<mark>Everyone</mark> is invited to the party." data-th-example="<mark>ทุกคน</mark>ได้รับเชิญไปงานเลี้ยง">everyone</div>
-        <div class="word" data-en="published" data-th="ตีพิมพ์" data-example="The book was <mark>published</mark> last year." data-th-example="หนังสือเล่มนี้ถูก<mark>ตีพิมพ์</mark>เมื่อปีที่แล้ว">published</div>
-        <div class="word" data-en="regret" data-th="เสียใจ" data-example="He felt <mark>regret</mark> after making that decision." data-th-example="เขา<mark>เสียใจ</mark>หลังจากตัดสินใจแบบนั้น">regret</div>
-        <div class="word" data-en="relationship" data-th="ความสัมพันธ์" data-example="They have a close <mark>relationship</mark>." data-th-example="พวกเขามี<mark>ความสัมพันธ์</mark>ที่ใกล้ชิด">relationship</div>
-        <div class="word" data-en="slow" data-th="ช้า" data-example="The internet connection is very <mark>slow</mark> today." data-th-example="วันนี้อินเทอร์เน็ต<mark>ช้า</mark>มาก">slow</div>
-        <div class="word" data-en="story" data-th="เรื่องราว" data-example="Tell me a <mark>story</mark> before bed." data-th-example="เล่า<mark>เรื่องราว</mark>ให้ฉันฟังก่อนนอน">story</div>
-      </div>
-      <div class="column">
-        <h3>Nature & Places</h3>
-        <div class="word" data-en="cave" data-th="ถ้ำ" data-example="They explored the dark <mark>cave</mark> together." data-th-example="พวกเขาสำรวจ<mark>ถ้ำ</mark>มืดด้วยกัน">cave</div>
-        <div class="word" data-en="coast" data-th="ชายฝั่ง" data-example="We walked along the <mark>coast</mark> at sunset." data-th-example="พวกเราเดินเลียบ<mark>ชายฝั่ง</mark>ตอนพระอาทิตย์ตก">coast</div>
-        <div class="word" data-en="mountain stream" data-th="ลำธารภูเขา" data-example="The <mark>mountain stream</mark> was clear and cold." data-th-example="<mark>ลำธารภูเขา</mark>ใสและเย็น">mountain stream</div>
-        <div class="word" data-en="peaceful lake" data-th="ทะเลสาบที่สงบ" data-example="They camped by a <mark>peaceful lake</mark>." data-th-example="พวกเขาตั้งแคมป์ข้าง<mark>ทะเลสาบที่สงบ</mark>">peaceful lake</div>
-        <div class="word" data-en="surrounded by" data-th="ล้อมรอบด้วย" data-example="The house is <mark>surrounded by</mark> trees." data-th-example="บ้านหลังนี้<mark>ล้อมรอบด้วย</mark>ต้นไม้">surrounded by</div>
-        <div class="word" data-en="valley" data-th="หุบเขา" data-example="The village is in a <mark>valley</mark>." data-th-example="หมู่บ้านตั้งอยู่ใน<mark>หุบเขา</mark>">valley</div>
-        <div class="word" data-en="waterfall" data-th="น้ำตก" data-example="We visited a beautiful <mark>waterfall</mark>." data-th-example="เราไปเที่ยว<mark>น้ำตก</mark>ที่สวยงาม">waterfall</div>
-        <div class="word" data-en="at the seaside" data-th="ที่ชายทะเล" data-example="They spent the weekend <mark>at the seaside</mark>." data-th-example="พวกเขาใช้เวลาสุดสัปดาห์<mark>ที่ชายทะเล</mark>">at the seaside</div>
-        <div class="word" data-en="the edge of the cliffs" data-th="ขอบหน้าผา" data-example="He stood at <mark>the edge of the cliffs</mark> and looked down." data-th-example="เขายืนอยู่ที่<mark>ขอบหน้าผา</mark>และมองลงไป">the edge of the cliffs</div>
-        <div class="word" data-en="woodland area" data-th="พื้นที่ป่าไม้" data-example="Deer live in the <mark>woodland area</mark>." data-th-example="กวางอาศัยอยู่ใน<mark>พื้นที่ป่าไม้</mark>">woodland area</div>
-      </div>
-      <div class="column">
-        <h3>Technology & Environment</h3>
-        <div class="word" data-en="solar panels" data-th="แผงโซลาร์เซลล์" data-example="<mark>Solar panels</mark> produce clean energy." data-th-example="<mark>แผงโซลาร์เซลล์</mark>ผลิตพลังงานสะอาด">solar panels</div>
-        <div class="word" data-en="nuclear energy" data-th="พลังงานนิวเคลียร์" data-example="<mark>Nuclear energy</mark> is a powerful source of electricity." data-th-example="<mark>พลังงานนิวเคลียร์</mark>เป็นแหล่งพลังงานไฟฟ้าที่มีประสิทธิภาพ">nuclear energy</div>
-        <div class="word" data-en="power stations" data-th="โรงไฟฟ้า" data-example="<mark>Power stations</mark> supply electricity to cities." data-th-example="<mark>โรงไฟฟ้า</mark>จ่ายไฟฟ้าให้กับเมือง">power stations</div>
-        <div class="word" data-en="deforestation" data-th="การตัดไม้ทำลายป่า" data-example="<mark>Deforestation</mark> affects wildlife habitats." data-th-example="<mark>การตัดไม้ทำลายป่า</mark>ส่งผลต่อที่อยู่อาศัยของสัตว์ป่า">deforestation</div>
-        <div class="word" data-en="greenhouse gas emissions" data-th="การปล่อยก๊าซเรือนกระจก" data-example="Cars contribute to <mark>greenhouse gas emissions</mark>." data-th-example="รถยนต์ก่อให้เกิด<mark>การปล่อยก๊าซเรือนกระจก</mark>">greenhouse gas emissions</div>
-        <div class="word" data-en="wind turbines" data-th="กังหันลม" data-example="<mark>Wind turbines</mark> generate renewable energy." data-th-example="<mark>กังหันลม</mark>ผลิตพลังงานหมุนเวียน">wind turbines</div>
-        <div class="word" data-en="renewable energy" data-th="พลังงานหมุนเวียน" data-example="<mark>Renewable energy</mark> is important for the future." data-th-example="<mark>พลังงานหมุนเวียน</mark>สำคัญต่ออนาคต">renewable energy</div>
-        <div class="word" data-en="harm" data-th="อันตราย" data-example="Smoking can <mark>harm</mark> your health." data-th-example="การสูบบุหรี่อาจ<mark>อันตราย</mark>ต่อสุขภาพ">harm</div>
-        <div class="word" data-en="global warming" data-th="ภาวะโลกร้อน" data-example="<mark>Global warming</mark> is a serious issue." data-th-example="<mark>ภาวะโลกร้อน</mark>เป็นปัญหาร้ายแรง">global warming</div>
-        <div class="word" data-en="climate change" data-th="การเปลี่ยนแปลงสภาพภูมิอากาศ" data-example="<mark>Climate change</mark> affects us all." data-th-example="<mark>การเปลี่ยนแปลงสภาพภูมิอากาศ</mark>มีผลต่อทุกคน">climate change</div>
-        <div class="word" data-en="environmental problems" data-th="ปัญหาสิ่งแวดล้อม" data-example="We must solve <mark>environmental problems</mark>." data-th-example="เราต้องแก้ไข<mark>ปัญหาสิ่งแวดล้อม</mark>">environmental problems</div>
-        <div class="word" data-en="polluting the atmosphere" data-th="มลพิษในบรรยากาศ" data-example="Factories are <mark>polluting the atmosphere</mark>." data-th-example="โรงงาน<mark>มลพิษในบรรยากาศ</mark>">polluting the atmosphere</div>
-      </div>
-      <div class="column">
-        <h3>Media & Literature</h3>
-        <div class="word" data-en="magazines" data-th="นิตยสาร" data-example="She likes to read <mark>magazines</mark>." data-th-example="เธอชอบอ่าน<mark>นิตยสาร</mark>">magazines</div>
-        <div class="word" data-en="newspapers" data-th="หนังสือพิมพ์" data-example="He buys <mark>newspapers</mark> every morning." data-th-example="เขาซื้อ<mark>หนังสือพิมพ์</mark>ทุกเช้า">newspapers</div>
-        <div class="word" data-en="non-fiction book" data-th="หนังสือสารคดี" data-example="I prefer reading a <mark>non-fiction book</mark>." data-th-example="ฉันชอบอ่าน<mark>หนังสือสารคดี</mark>มากกว่า">non-fiction book</div>
-        <div class="word" data-en="novels" data-th="นวนิยาย" data-example="She writes <mark>novels</mark> in her free time." data-th-example="เธอเขียน<mark>นวนิยาย</mark>ในเวลาว่าง">novels</div>
-        <div class="word" data-en="poems" data-th="บทกวี" data-example="He recited beautiful <mark>poems</mark>." data-th-example="เขาท่อง<mark>บทกวี</mark>ที่ไพเราะ">poems</div>
-        <div class="word" data-en="social media post" data-th="โพสต์โซเชียลมีเดีย" data-example="Her <mark>social media post</mark> went viral." data-th-example="<mark>โพสต์โซเชียลมีเดีย</mark>ของเธอกลายเป็นไวรัล">social media post</div>
-        <div class="word" data-en="rehearsed" data-th="ซ้อม" data-example="They <mark>rehearsed</mark> the play for weeks." data-th-example="พวกเขา<mark>ซ้อม</mark>ละครเป็นสัปดาห์">rehearsed</div>
-        <div class="word" data-en="poetry" data-th="กวีนิพนธ์" data-example="He enjoys reading <mark>poetry</mark>." data-th-example="เขาชอบอ่าน<mark>กวีนิพนธ์</mark>">poetry</div>
-        <div class="word" data-en="mystery" data-th="ลึกลับ" data-example="She loves <mark>mystery</mark> novels." data-th-example="เธอชอบนวนิยาย<mark>ลึกลับ</mark>">mystery</div>
-        <div class="word" data-en="journal" data-th="วารสาร" data-example="He keeps a <mark>journal</mark> of his travels." data-th-example="เขาเก็บ<mark>วารสาร</mark>การเดินทางของเขา">journal</div>
-        <div class="word" data-en="cover" data-th="ปก" data-example="The <mark>cover</mark> of the book is blue." data-th-example="<mark>ปก</mark>ของหนังสือเล่มนี้เป็นสีน้ำเงิน">cover</div>
-        <div class="word" data-en="posting" data-th="การโพสต์" data-example="She is <mark>posting</mark> a photo online." data-th-example="เธอกำลัง<mark>โพสต์</mark>รูปภาพออนไลน์">posting</div>
-        <div class="word" data-en="chapter" data-th="บท" data-example="I finished the first <mark>chapter</mark>." data-th-example="ฉันอ่าน<mark>บท</mark>แรกจบแล้ว">chapter</div>
-        <div class="word" data-en="editing" data-th="การแก้ไข" data-example="He is <mark>editing</mark> his essay." data-th-example="เขากำลัง<mark>แก้ไข</mark>เรียงความของเขา">editing</div>
-        <div class="word" data-en="romantic" data-th="โรแมนติก" data-example="They watched a <mark>romantic</mark> movie." data-th-example="พวกเขาดูหนัง<mark>โรแมนติก</mark>ด้วยกัน">romantic</div>
-        <div class="word" data-en="natural resources" data-th="ทรัพยากรธรรมชาติ" data-example="We must protect our <mark>natural resources</mark>." data-th-example="เราต้องปกป้อง<mark>ทรัพยากรธรรมชาติ</mark>ของเรา">natural resources</div>
-      </div>
-      <div class="column">
-        <h3>Film & Writing</h3>
-        <div class="word" data-en="effects" data-th="ผลกระทบ" data-example="The movie had amazing special <mark>effects</mark>." data-th-example="หนังเรื่องนี้มี<mark>เอฟเฟกต์</mark>พิเศษที่น่าทึ่ง">effects</div>
-        <div class="word" data-en="lines" data-th="บรรทัด" data-example="He forgot his <mark>lines</mark> during the play." data-th-example="เขาลืม<mark>บทพูด</mark>ระหว่างการแสดง">lines</div>
-        <div class="word" data-en="live-action" data-th="แสดงสด" data-example="They made a <mark>live-action</mark> version of the cartoon." data-th-example="พวกเขาสร้างเวอร์ชัน<mark>แสดงสด</mark>ของการ์ตูน">live-action</div>
-        <div class="word" data-en="location" data-th="สถานที่" data-example="The film was shot on <mark>location</mark> in Paris." data-th-example="ภาพยนตร์ถ่ายทำที่<mark>สถานที่</mark>จริงในปารีส">location</div>
-        <div class="word" data-en="parts" data-th="ส่วน" data-example="He played two <mark>parts</mark> in the play." data-th-example="เขาเล่น<mark>สองบทบาท</mark>ในละคร">parts</div>
-        <div class="word" data-en="set" data-th="ฉาก" data-example="The <mark>set</mark> was beautifully designed." data-th-example="<mark>ฉาก</mark>ถูกออกแบบอย่างสวยงาม">set</div>
-        <div class="word" data-en="studios" data-th="สตูดิโอ" data-example="The movie was filmed in several <mark>studios</mark>." data-th-example="หนังเรื่องนี้ถ่ายทำใน<mark>สตูดิโอ</mark>หลายแห่ง">studios</div>
-        <div class="word" data-en="actors" data-th="นักแสดง" data-example="The <mark>actors</mark> did a great job." data-th-example="<mark>นักแสดง</mark>ทำได้ดีมาก">actors</div>
-        <div class="word" data-en="director" data-th="ผู้กำกับ" data-example="The <mark>director</mark> won an award." data-th-example="<mark>ผู้กำกับ</mark>ได้รับรางวัล">director</div>
-        <div class="word" data-en="plot" data-th="โครงเรื่อง" data-example="The <mark>plot</mark> was very interesting." data-th-example="<mark>โครงเรื่อง</mark>น่าสนใจมาก">plot</div>
-        <div class="word" data-en="script" data-th="บท" data-example="She wrote the <mark>script</mark> herself." data-th-example="เธอเขียน<mark>บท</mark>เอง">script</div>
-        <div class="word" data-en="blogs" data-th="บล็อก" data-example="He writes <mark>blogs</mark> about travel." data-th-example="เขาเขียน<mark>บล็อก</mark>เกี่ยวกับการท่องเที่ยว">blogs</div>
-        <div class="word" data-en="comics" data-th="การ์ตูน" data-example="I love reading <mark>comics</mark>." data-th-example="ฉันชอบอ่าน<mark>การ์ตูน</mark>มาก">comics</div>
-        <div class="word" data-en="diaries" data-th="ไดอารี่" data-example="She keeps several <mark>diaries</mark>." data-th-example="เธอมี<mark>ไดอารี่</mark>หลายเล่ม">diaries</div>
-        <div class="word" data-en="letters" data-th="จดหมาย" data-example="He sent <mark>letters</mark> to his friends." data-th-example="เขาส่ง<mark>จดหมาย</mark>ถึงเพื่อน">letters</div>
-        <div class="word" data-en="have an impact on" data-th="มีผลกระทบต่อ" data-example="Your words <mark>have an impact on</mark> me." data-th-example="คำพูดของคุณ<mark>มีผลกระทบต่อ</mark>ฉัน">have an impact on</div>
-        <div class="word" data-en="sustainable" data-th="ยั่งยืน" data-example="We need <mark>sustainable</mark> solutions." data-th-example="เราต้องการทางออกที่<mark>ยั่งยืน</mark>">sustainable</div>
-        <div class="word" data-en="recycling waste" data-th="รีไซเคิลขยะ" data-example="<mark>Recycling waste</mark> helps the environment." data-th-example="<mark>รีไซเคิลขยะ</mark>ช่วยสิ่งแวดล้อม">recycling waste</div>
-      </div>
-    </div>
-    <div id="example-sentence"></div>
+    <header class="header">
+      <h1 class="title">Dictation Girl</h1>
+      <p class="subtitle">Master English vocabulary with interactive examples</p>
+      
+      <nav class="nav-tabs">
+        <a href="#all" class="nav-tab active" data-category="all">All Words</a>
+        <a href="#general" class="nav-tab" data-category="general">General</a>
+        <a href="#nature" class="nav-tab" data-category="nature">Nature</a>
+        <a href="#technology" class="nav-tab" data-category="technology">Technology</a>
+        <a href="#media" class="nav-tab" data-category="media">Media</a>
+        <a href="#film" class="nav-tab" data-category="film">Film</a>
+      </nav>
+    </header>
+
+    <main class="word-grid">
+      <!-- General & Emotions -->
+      <section class="category-section" data-category="general">
+        <h3 class="category-title">General & Emotions</h3>
+        <div class="words-container">
+          <div class="word-card" data-en="copies" data-th="สำเนา" data-example="She made several <mark>copies</mark> of the document." data-th-example="เธอถ่าย<mark>สำเนา</mark>เอกสารหลายชุด">copies</div>
+          <div class="word-card" data-en="criticism" data-th="คำวิจารณ์" data-example="He accepted the <mark>criticism</mark> and improved his work." data-th-example="เขายอมรับ<mark>คำวิจารณ์</mark>และปรับปรุงงานของเขา">criticism</div>
+          <div class="word-card" data-en="definitely" data-th="แน่นอน" data-example="I will <mark>definitely</mark> join the meeting tomorrow." data-th-example="ฉันจะเข้าร่วมประชุมพรุ่งนี้อย่าง<mark>แน่นอน</mark>">definitely</div>
+          <div class="word-card" data-en="enjoyed" data-th="สนุก" data-example="She <mark>enjoyed</mark> the movie a lot." data-th-example="เธอ<mark>สนุก</mark>กับภาพยนตร์มาก">enjoyed</div>
+          <div class="word-card" data-en="everyone" data-th="ทุกคน" data-example="<mark>Everyone</mark> is invited to the party." data-th-example="<mark>ทุกคน</mark>ได้รับเชิญไปงานเลี้ยง">everyone</div>
+          <div class="word-card" data-en="published" data-th="ตีพิมพ์" data-example="The book was <mark>published</mark> last year." data-th-example="หนังสือเล่มนี้ถูก<mark>ตีพิมพ์</mark>เมื่อปีที่แล้ว">published</div>
+          <div class="word-card" data-en="regret" data-th="เสียใจ" data-example="He felt <mark>regret</mark> after making that decision." data-th-example="เขา<mark>เสียใจ</mark>หลังจากตัดสินใจแบบนั้น">regret</div>
+          <div class="word-card" data-en="relationship" data-th="ความสัมพันธ์" data-example="They have a close <mark>relationship</mark>." data-th-example="พวกเขามี<mark>ความสัมพันธ์</mark>ที่ใกล้ชิด">relationship</div>
+          <div class="word-card" data-en="slow" data-th="ช้า" data-example="The internet connection is very <mark>slow</mark> today." data-th-example="วันนี้อินเทอร์เน็ต<mark>ช้า</mark>มาก">slow</div>
+          <div class="word-card" data-en="story" data-th="เรื่องราว" data-example="Tell me a <mark>story</mark> before bed." data-th-example="เล่า<mark>เรื่องราว</mark>ให้ฉันฟังก่อนนอน">story</div>
+        </div>
+      </section>
+
+      <!-- Nature & Places -->
+      <section class="category-section" data-category="nature">
+        <h3 class="category-title">Nature & Places</h3>
+        <div class="words-container">
+          <div class="word-card" data-en="cave" data-th="ถ้ำ" data-example="They explored the dark <mark>cave</mark> together." data-th-example="พวกเขาสำรวจ<mark>ถ้ำ</mark>มืดด้วยกัน">cave</div>
+          <div class="word-card" data-en="coast" data-th="ชายฝั่ง" data-example="We walked along the <mark>coast</mark> at sunset." data-th-example="พวกเราเดินเลียบ<mark>ชายฝั่ง</mark>ตอนพระอาทิตย์ตก">coast</div>
+          <div class="word-card" data-en="mountain stream" data-th="ลำธารภูเขา" data-example="The <mark>mountain stream</mark> was clear and cold." data-th-example="<mark>ลำธารภูเขา</mark>ใสและเย็น">mountain stream</div>
+          <div class="word-card" data-en="peaceful lake" data-th="ทะเลสาบที่สงบ" data-example="They camped by a <mark>peaceful lake</mark>." data-th-example="พวกเขาตั้งแคมป์ข้าง<mark>ทะเลสาบที่สงบ</mark>">peaceful lake</div>
+          <div class="word-card" data-en="surrounded by" data-th="ล้อมรอบด้วย" data-example="The house is <mark>surrounded by</mark> trees." data-th-example="บ้านหลังนี้<mark>ล้อมรอบด้วย</mark>ต้นไม้">surrounded by</div>
+          <div class="word-card" data-en="valley" data-th="หุบเขา" data-example="The village is in a <mark>valley</mark>." data-th-example="หมู่บ้านตั้งอยู่ใน<mark>หุบเขา</mark>">valley</div>
+          <div class="word-card" data-en="waterfall" data-th="น้ำตก" data-example="We visited a beautiful <mark>waterfall</mark>." data-th-example="เราไปเที่ยว<mark>น้ำตก</mark>ที่สวยงาม">waterfall</div>
+          <div class="word-card" data-en="at the seaside" data-th="ที่ชายทะเล" data-example="They spent the weekend <mark>at the seaside</mark>." data-th-example="พวกเขาใช้เวลาสุดสัปดาห์<mark>ที่ชายทะเล</mark>">at the seaside</div>
+          <div class="word-card" data-en="the edge of the cliffs" data-th="ขอบหน้าผา" data-example="He stood at <mark>the edge of the cliffs</mark> and looked down." data-th-example="เขายืนอยู่ที่<mark>ขอบหน้าผา</mark>และมองลงไป">the edge of the cliffs</div>
+          <div class="word-card" data-en="woodland area" data-th="พื้นที่ป่าไม้" data-example="Deer live in the <mark>woodland area</mark>." data-th-example="กวางอาศัยอยู่ใน<mark>พื้นที่ป่าไม้</mark>">woodland area</div>
+        </div>
+      </section>
+
+      <!-- Technology & Environment -->
+      <section class="category-section" data-category="technology">
+        <h3 class="category-title">Technology & Environment</h3>
+        <div class="words-container">
+          <div class="word-card" data-en="solar panels" data-th="แผงโซลาร์เซลล์" data-example="<mark>Solar panels</mark> produce clean energy." data-th-example="<mark>แผงโซลาร์เซลล์</mark>ผลิตพลังงานสะอาด">solar panels</div>
+          <div class="word-card" data-en="nuclear energy" data-th="พลังงานนิวเคลียร์" data-example="<mark>Nuclear energy</mark> is a powerful source of electricity." data-th-example="<mark>พลังงานนิวเคลียร์</mark>เป็นแหล่งพลังงานไฟฟ้าที่มีประสิทธิภาพ">nuclear energy</div>
+          <div class="word-card" data-en="power stations" data-th="โรงไฟฟ้า" data-example="<mark>Power stations</mark> supply electricity to cities." data-th-example="<mark>โรงไฟฟ้า</mark>จ่ายไฟฟ้าให้กับเมือง">power stations</div>
+          <div class="word-card" data-en="deforestation" data-th="การตัดไม้ทำลายป่า" data-example="<mark>Deforestation</mark> affects wildlife habitats." data-th-example="<mark>การตัดไม้ทำลายป่า</mark>ส่งผลต่อที่อยู่อาศัยของสัตว์ป่า">deforestation</div>
+          <div class="word-card" data-en="greenhouse gas emissions" data-th="การปล่อยก๊าซเรือนกระจก" data-example="Cars contribute to <mark>greenhouse gas emissions</mark>." data-th-example="รถยนต์ก่อให้เกิด<mark>การปล่อยก๊าซเรือนกระจก</mark>">greenhouse gas emissions</div>
+          <div class="word-card" data-en="wind turbines" data-th="กังหันลม" data-example="<mark>Wind turbines</mark> generate renewable energy." data-th-example="<mark>กังหันลม</mark>ผลิตพลังงานหมุนเวียน">wind turbines</div>
+          <div class="word-card" data-en="renewable energy" data-th="พลังงานหมุนเวียน" data-example="<mark>Renewable energy</mark> is important for the future." data-th-example="<mark>พลังงานหมุนเวียน</mark>สำคัญต่ออนาคต">renewable energy</div>
+          <div class="word-card" data-en="harm" data-th="อันตราย" data-example="Smoking can <mark>harm</mark> your health." data-th-example="การสูบบุหรี่อาจ<mark>อันตราย</mark>ต่อสุขภาพ">harm</div>
+          <div class="word-card" data-en="global warming" data-th="ภาวะโลกร้อน" data-example="<mark>Global warming</mark> is a serious issue." data-th-example="<mark>ภาวะโลกร้อน</mark>เป็นปัญหาร้ายแรง">global warming</div>
+          <div class="word-card" data-en="climate change" data-th="การเปลี่ยนแปลงสภาพภูมิอากาศ" data-example="<mark>Climate change</mark> affects us all." data-th-example="<mark>การเปลี่ยนแปลงสภาพภูมิอากาศ</mark>มีผลต่อทุกคน">climate change</div>
+          <div class="word-card" data-en="environmental problems" data-th="ปัญหาสิ่งแวดล้อม" data-example="We must solve <mark>environmental problems</mark>." data-th-example="เราต้องแก้ไข<mark>ปัญหาสิ่งแวดล้อม</mark>">environmental problems</div>
+          <div class="word-card" data-en="polluting the atmosphere" data-th="มลพิษในบรรยากาศ" data-example="Factories are <mark>polluting the atmosphere</mark>." data-th-example="โรงงาน<mark>มลพิษในบรรยากาศ</mark>">polluting the atmosphere</div>
+        </div>
+      </section>
+
+      <!-- Media & Literature -->
+      <section class="category-section" data-category="media">
+        <h3 class="category-title">Media & Literature</h3>
+        <div class="words-container">
+          <div class="word-card" data-en="magazines" data-th="นิตยสาร" data-example="She likes to read <mark>magazines</mark>." data-th-example="เธอชอบอ่าน<mark>นิตยสาร</mark>">magazines</div>
+          <div class="word-card" data-en="newspapers" data-th="หนังสือพิมพ์" data-example="He buys <mark>newspapers</mark> every morning." data-th-example="เขาซื้อ<mark>หนังสือพิมพ์</mark>ทุกเช้า">newspapers</div>
+          <div class="word-card" data-en="non-fiction book" data-th="หนังสือสารคดี" data-example="I prefer reading a <mark>non-fiction book</mark>." data-th-example="ฉันชอบอ่าน<mark>หนังสือสารคดี</mark>มากกว่า">non-fiction book</div>
+          <div class="word-card" data-en="novels" data-th="นวนิยาย" data-example="She writes <mark>novels</mark> in her free time." data-th-example="เธอเขียน<mark>นวนิยาย</mark>ในเวลาว่าง">novels</div>
+          <div class="word-card" data-en="poems" data-th="บทกวี" data-example="He recited beautiful <mark>poems</mark>." data-th-example="เขาท่อง<mark>บทกวี</mark>ที่ไพเราะ">poems</div>
+          <div class="word-card" data-en="social media post" data-th="โพสต์โซเชียลมีเดีย" data-example="Her <mark>social media post</mark> went viral." data-th-example="<mark>โพสต์โซเชียลมีเดีย</mark>ของเธอกลายเป็นไวรัล">social media post</div>
+          <div class="word-card" data-en="rehearsed" data-th="ซ้อม" data-example="They <mark>rehearsed</mark> the play for weeks." data-th-example="พวกเขา<mark>ซ้อม</mark>ละครเป็นสัปดาห์">rehearsed</div>
+          <div class="word-card" data-en="poetry" data-th="กวีนิพนธ์" data-example="He enjoys reading <mark>poetry</mark>." data-th-example="เขาชอบอ่าน<mark>กวีนิพนธ์</mark>">poetry</div>
+          <div class="word-card" data-en="mystery" data-th="ลึกลับ" data-example="She loves <mark>mystery</mark> novels." data-th-example="เธอชอบนวนิยาย<mark>ลึกลับ</mark>">mystery</div>
+          <div class="word-card" data-en="journal" data-th="วารสาร" data-example="He keeps a <mark>journal</mark> of his travels." data-th-example="เขาเก็บ<mark>วารสาร</mark>การเดินทางของเขา">journal</div>
+          <div class="word-card" data-en="cover" data-th="ปก" data-example="The <mark>cover</mark> of the book is blue." data-th-example="<mark>ปก</mark>ของหนังสือเล่มนี้เป็นสีน้ำเงิน">cover</div>
+          <div class="word-card" data-en="posting" data-th="การโพสต์" data-example="She is <mark>posting</mark> a photo online." data-th-example="เธอกำลัง<mark>โพสต์</mark>รูปภาพออนไลน์">posting</div>
+          <div class="word-card" data-en="chapter" data-th="บท" data-example="I finished the first <mark>chapter</mark>." data-th-example="ฉันอ่าน<mark>บท</mark>แรกจบแล้ว">chapter</div>
+          <div class="word-card" data-en="editing" data-th="การแก้ไข" data-example="He is <mark>editing</mark> his essay." data-th-example="เขากำลัง<mark>แก้ไข</mark>เรียงความของเขา">editing</div>
+          <div class="word-card" data-en="romantic" data-th="โรแมนติก" data-example="They watched a <mark>romantic</mark> movie." data-th-example="พวกเขาดูหนัง<mark>โรแมนติก</mark>ด้วยกัน">romantic</div>
+          <div class="word-card" data-en="natural resources" data-th="ทรัพยากรธรรมชาติ" data-example="We must protect our <mark>natural resources</mark>." data-th-example="เราต้องปกป้อง<mark>ทรัพยากรธรรมชาติ</mark>ของเรา">natural resources</div>
+        </div>
+      </section>
+
+      <!-- Film & Writing -->
+      <section class="category-section" data-category="film">
+        <h3 class="category-title">Film & Writing</h3>
+        <div class="words-container">
+          <div class="word-card" data-en="effects" data-th="ผลกระทบ" data-example="The movie had amazing special <mark>effects</mark>." data-th-example="หนังเรื่องนี้มี<mark>เอฟเฟกต์</mark>พิเศษที่น่าทึ่ง">effects</div>
+          <div class="word-card" data-en="lines" data-th="บรรทัด" data-example="He forgot his <mark>lines</mark> during the play." data-th-example="เขาลืม<mark>บทพูด</mark>ระหว่างการแสดง">lines</div>
+          <div class="word-card" data-en="live-action" data-th="แสดงสด" data-example="They made a <mark>live-action</mark> version of the cartoon." data-th-example="พวกเขาสร้างเวอร์ชัน<mark>แสดงสด</mark>ของการ์ตูน">live-action</div>
+          <div class="word-card" data-en="location" data-th="สถานที่" data-example="The film was shot on <mark>location</mark> in Paris." data-th-example="ภาพยนตร์ถ่ายทำที่<mark>สถานที่</mark>จริงในปารีส">location</div>
+          <div class="word-card" data-en="parts" data-th="ส่วน" data-example="He played two <mark>parts</mark> in the play." data-th-example="เขาเล่น<mark>สองบทบาท</mark>ในละคร">parts</div>
+          <div class="word-card" data-en="set" data-th="ฉาก" data-example="The <mark>set</mark> was beautifully designed." data-th-example="<mark>ฉาก</mark>ถูกออกแบบอย่างสวยงาม">set</div>
+          <div class="word-card" data-en="studios" data-th="สตูดิโอ" data-example="The movie was filmed in several <mark>studios</mark>." data-th-example="หนังเรื่องนี้ถ่ายทำใน<mark>สตูดิโอ</mark>หลายแห่ง">studios</div>
+          <div class="word-card" data-en="actors" data-th="นักแสดง" data-example="The <mark>actors</mark> did a great job." data-th-example="<mark>นักแสดง</mark>ทำได้ดีมาก">actors</div>
+          <div class="word-card" data-en="director" data-th="ผู้กำกับ" data-example="The <mark>director</mark> won an award." data-th-example="<mark>ผู้กำกับ</mark>ได้รับรางวัล">director</div>
+          <div class="word-card" data-en="plot" data-th="โครงเรื่อง" data-example="The <mark>plot</mark> was very interesting." data-th-example="<mark>โครงเรื่อง</mark>น่าสนใจมาก">plot</div>
+          <div class="word-card" data-en="script" data-th="บท" data-example="She wrote the <mark>script</mark> herself." data-th-example="เธอเขียน<mark>บท</mark>เอง">script</div>
+          <div class="word-card" data-en="blogs" data-th="บล็อก" data-example="He writes <mark>blogs</mark> about travel." data-th-example="เขาเขียน<mark>บล็อก</mark>เกี่ยวกับการท่องเที่ยว">blogs</div>
+          <div class="word-card" data-en="comics" data-th="การ์ตูน" data-example="I love reading <mark>comics</mark>." data-th-example="ฉันชอบอ่าน<mark>การ์ตูน</mark>มาก">comics</div>
+          <div class="word-card" data-en="diaries" data-th="ไดอารี่" data-example="She keeps several <mark>diaries</mark>." data-th-example="เธอมี<mark>ไดอารี่</mark>หลายเล่ม">diaries</div>
+          <div class="word-card" data-en="letters" data-th="จดหมาย" data-example="He sent <mark>letters</mark> to his friends." data-th-example="เขาส่ง<mark>จดหมาย</mark>ถึงเพื่อน">letters</div>
+          <div class="word-card" data-en="have an impact on" data-th="มีผลกระทบต่อ" data-example="Your words <mark>have an impact on</mark> me." data-th-example="คำพูดของคุณ<mark>มีผลกระทบต่อ</mark>ฉัน">have an impact on</div>
+          <div class="word-card" data-en="sustainable" data-th="ยั่งยืน" data-example="We need <mark>sustainable</mark> solutions." data-th-example="เราต้องการทางออกที่<mark>ยั่งยืน</mark>">sustainable</div>
+          <div class="word-card" data-en="recycling waste" data-th="รีไซเคิลขยะ" data-example="<mark>Recycling waste</mark> helps the environment." data-th-example="<mark>รีไซเคิลขยะ</mark>ช่วยสิ่งแวดล้อม">recycling waste</div>
+        </div>
+      </section>
+    </main>
   </div>
+
+  <!-- Modal -->
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <button class="modal-close" id="modal-close">&times;</button>
+      <div class="example-sentence" id="example-sentence"></div>
+      <div class="example-translation" id="example-translation"></div>
+    </div>
+  </div>
+
   <script>
-    // Floating sentence logic
-    const exampleDiv = document.getElementById('example-sentence');
-    document.querySelectorAll('.word').forEach(word => {
-      // Hover: switch to Thai, Unhover: switch to English
-      word.addEventListener('mouseenter', function() {
-        const el = this;
-        el.classList.add('fading');
-        setTimeout(() => {
-          el.textContent = el.getAttribute('data-th');
-          el.classList.remove('fading');
-        }, 220);
-      });
-      word.addEventListener('mouseleave', function() {
-        const el = this;
-        el.classList.add('fading');
-        setTimeout(() => {
-          el.textContent = el.getAttribute('data-en');
-          el.classList.remove('fading');
-        }, 220);
-      });
-      // Click: show example sentence
-      word.addEventListener('click', function() {
-        const example = this.getAttribute('data-example');
-        const thExample = this.getAttribute('data-th-example');
-        exampleDiv.innerHTML = `<button id='close-btn' title='Close'>&times;</button>` +
-          `<div style='margin-bottom:18px'>${example}</div>` +
-          `<div style='color:#222;font-size:1.1rem;'>${thExample}</div>`;
-        exampleDiv.className = 'show';
-        setTimeout(() => {
-          document.getElementById('close-btn').focus();
-        }, 100);
-      });
-    });
-    // Close floating sentence
-    exampleDiv.addEventListener('click', function(e) {
-      if(e.target.id === 'close-btn') {
-        exampleDiv.className = '';
-        setTimeout(()=>{exampleDiv.innerHTML = '';}, 200);
+    // Create floating particles
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = 50;
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 6 + 's';
+        particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+        particlesContainer.appendChild(particle);
       }
-    });
-    // ESC key closes
-    document.addEventListener('keydown', function(e) {
-      if(e.key === 'Escape') {
-        exampleDiv.className = '';
-        setTimeout(()=>{exampleDiv.innerHTML = '';}, 200);
+    }
+
+    // Navigation tabs
+    function initNavigation() {
+      const navTabs = document.querySelectorAll('.nav-tab');
+      const sections = document.querySelectorAll('.category-section');
+      
+      navTabs.forEach(tab => {
+        tab.addEventListener('click', (e) => {
+          e.preventDefault();
+          
+          // Remove active class from all tabs
+          navTabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          
+          const category = tab.getAttribute('data-category');
+          
+          sections.forEach(section => {
+            if (category === 'all' || section.getAttribute('data-category') === category) {
+              section.style.display = 'block';
+              section.style.animation = 'fadeIn 0.5s ease';
+            } else {
+              section.style.display = 'none';
+            }
+          });
+        });
+      });
+    }
+
+    // Word card interactions
+    function initWordCards() {
+      const wordCards = document.querySelectorAll('.word-card');
+      const modal = document.getElementById('modal');
+      const modalClose = document.getElementById('modal-close');
+      const exampleSentence = document.getElementById('example-sentence');
+      const exampleTranslation = document.getElementById('example-translation');
+      
+      wordCards.forEach(card => {
+        // Hover effect - switch to Thai
+        card.addEventListener('mouseenter', function() {
+          const el = this;
+          el.classList.add('fading');
+          setTimeout(() => {
+            el.textContent = el.getAttribute('data-th');
+            el.classList.remove('fading');
+          }, 150);
+        });
+        
+        // Mouse leave - switch back to English
+        card.addEventListener('mouseleave', function() {
+          const el = this;
+          el.classList.add('fading');
+          setTimeout(() => {
+            el.textContent = el.getAttribute('data-en');
+            el.classList.remove('fading');
+          }, 150);
+        });
+        
+        // Click - show modal
+        card.addEventListener('click', function() {
+          const example = this.getAttribute('data-example');
+          const thExample = this.getAttribute('data-th-example');
+          
+          exampleSentence.innerHTML = example;
+          exampleTranslation.innerHTML = thExample;
+          
+          modal.classList.add('show');
+          document.body.style.overflow = 'hidden';
+        });
+      });
+      
+      // Close modal
+      modalClose.addEventListener('click', () => {
+        modal.classList.remove('show');
+        document.body.style.overflow = '';
+      });
+      
+      // Close modal on backdrop click
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.classList.remove('show');
+          document.body.style.overflow = '';
+        }
+      });
+      
+      // Close modal with ESC key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('show')) {
+          modal.classList.remove('show');
+          document.body.style.overflow = '';
+        }
+      });
+    }
+
+    // Add fadeIn animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
       }
+    `;
+    document.head.appendChild(style);
+
+    // Initialize everything
+    document.addEventListener('DOMContentLoaded', () => {
+      createParticles();
+      initNavigation();
+      initWordCards();
     });
   </script>
 </body>
