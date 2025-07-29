@@ -6,6 +6,7 @@
   <title>English Dictation</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap');
     
     :root {
       --primary: #6366f1;
@@ -33,12 +34,28 @@
     }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: 'Inter', 'Noto Sans Thai', -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--darker);
       color: var(--light);
       overflow-x: hidden;
       min-height: 100vh;
       position: relative;
+    }
+    
+    .thai-title {
+      font-family: 'Noto Sans Thai', sans-serif;
+      font-weight: 500;
+      font-size: 0.9em;
+      opacity: 0.9;
+      margin-left: 0.5rem;
+    }
+    
+    .thai-translation {
+      font-family: 'Noto Sans Thai', sans-serif;
+      font-size: 0.9em;
+      opacity: 0.8;
+      display: block;
+      margin-top: 0.3rem;
     }
 
     /* Animated background */
@@ -430,35 +447,35 @@
 
   <div class="container">
     <header class="header">
-      <h1 class="title">Dictation</h1>
-      <p class="subtitle">Master English vocabulary with interactive examples</p>
+      <h1 class="title">Dictation <span class="thai-title">(การเขียนตามคำบอก)</span></h1>
+      <p class="subtitle">Master English vocabulary with interactive examples <span class="thai-translation">เรียนรู้คำศัพท์ภาษาอังกฤษด้วยตัวอย่างแบบโต้ตอบ</span></p>
       <div style="margin-bottom:2.5rem;">
-        <a href="future_tenses.html" class="nav-link" style="margin-right:1rem;display:inline-block;">📖 Learn Future Tenses</a>
-        <a href="present_tenses.html" class="nav-link" style="margin-right:1rem;display:inline-block;">📖 Learn Present Tenses</a>
-        <a href="past_tenses.html" class="nav-link" style="margin-right:1rem;display:inline-block;">📖 Learn Past Tenses</a>
-        <a href="grammar_rules.html" class="nav-link" style="margin-right:1rem;display:inline-block;">📏 Grammar Rules</a>
-        <a href="vocabulary_topics.html" class="nav-link" style="margin-right:1rem;display:inline-block;">📚 Vocabulary Topics</a>
-        <a href="pronunciation_guide.html" class="nav-link" style="display:inline-block;">🔊 Pronunciation Guide</a>
+        <a href="future_tenses.html" class="nav-link" style="margin-right:1rem;display:inline-block;">📖 Learn Future Tenses <span class="thai-title">(กาลอนาคต)</span></a>
+        <a href="present_tenses.html" class="nav-link" style="margin-right:1rem;display:inline-block;">📖 Learn Present Tenses <span class="thai-title">(กาลปัจจุบัน)</span></a>
+        <a href="past_tenses.html" class="nav-link" style="margin-right:1rem;display:inline-block;">📖 Learn Past Tenses <span class="thai-title">(กาลอดีต)</span></a>
+        <a href="grammar_rules.html" class="nav-link" style="margin-right:1rem;display:inline-block;">📏 Grammar Rules <span class="thai-title">(กฎไวยากรณ์)</span></a>
+        <a href="vocabulary_topics.html" class="nav-link" style="margin-right:1rem;display:inline-block;">📚 Vocabulary Topics <span class="thai-title">(หัวข้อคำศัพท์)</span></a>
+        <a href="pronunciation_guide.html" class="nav-link" style="display:inline-block;">🔊 Pronunciation Guide <span class="thai-title">(คู่มือการออกเสียง)</span></a>
       </div>
       
       <nav class="nav-tabs">
-        <a href="#all" class="nav-tab active" data-category="all">All Words</a>
-        <a href="#general" class="nav-tab" data-category="general">General</a>
-        <a href="#nature" class="nav-tab" data-category="nature">Nature</a>
-        <a href="#technology" class="nav-tab" data-category="technology">Technology</a>
-        <a href="#media" class="nav-tab" data-category="media">Media</a>
-        <a href="#film" class="nav-tab" data-category="film">Film</a>
-        <a href="#education" class="nav-tab" data-category="education">Education</a>
-        <a href="#health" class="nav-tab" data-category="health">Health</a>
-        <a href="#travel" class="nav-tab" data-category="travel">Travel</a>
-        <a href="#tenses" class="nav-tab" data-category="tenses">Tenses</a>
+        <a href="#all" class="nav-tab active" data-category="all">All Words <span class="thai-title">(คำทั้งหมด)</span></a>
+        <a href="#general" class="nav-tab" data-category="general">General <span class="thai-title">(ทั่วไป)</span></a>
+        <a href="#nature" class="nav-tab" data-category="nature">Nature <span class="thai-title">(ธรรมชาติ)</span></a>
+        <a href="#technology" class="nav-tab" data-category="technology">Technology <span class="thai-title">(เทคโนโลยี)</span></a>
+        <a href="#media" class="nav-tab" data-category="media">Media <span class="thai-title">(สื่อ)</span></a>
+        <a href="#film" class="nav-tab" data-category="film">Film <span class="thai-title">(ภาพยนตร์)</span></a>
+        <a href="#education" class="nav-tab" data-category="education">Education <span class="thai-title">(การศึกษา)</span></a>
+        <a href="#health" class="nav-tab" data-category="health">Health <span class="thai-title">(สุขภาพ)</span></a>
+        <a href="#travel" class="nav-tab" data-category="travel">Travel <span class="thai-title">(การเดินทาง)</span></a>
+        <a href="#tenses" class="nav-tab" data-category="tenses">Tenses <span class="thai-title">(กาล)</span></a>
       </nav>
     </header>
 
     <main class="word-grid">
       <!-- General & Emotions -->
       <section class="category-section" data-category="general">
-        <h3 class="category-title">General & Emotions</h3>
+        <h3 class="category-title">General & Emotions <span class="thai-title">(ทั่วไปและอารมณ์)</span></h3>
         <div class="words-container">
           <div class="word-card" data-en="copies" data-th="สำเนา" data-example="She made several <mark>copies</mark> of the document." data-th-example="เธอถ่าย<mark>สำเนา</mark>เอกสารหลายชุด">copies</div>
           <div class="word-card" data-en="criticism" data-th="คำวิจารณ์" data-example="He accepted the <mark>criticism</mark> and improved his work." data-th-example="เขายอมรับ<mark>คำวิจารณ์</mark>และปรับปรุงงานของเขา">criticism</div>
@@ -475,7 +492,7 @@
 
       <!-- Nature & Places -->
       <section class="category-section" data-category="nature">
-        <h3 class="category-title">Nature & Places</h3>
+        <h3 class="category-title">Nature & Places <span class="thai-title">(ธรรมชาติและสถานที่)</span></h3>
         <div class="words-container">
           <div class="word-card" data-en="cave" data-th="ถ้ำ" data-example="They explored the dark <mark>cave</mark> together." data-th-example="พวกเขาสำรวจ<mark>ถ้ำ</mark>มืดด้วยกัน">cave</div>
           <div class="word-card" data-en="coast" data-th="ชายฝั่ง" data-example="We walked along the <mark>coast</mark> at sunset." data-th-example="พวกเราเดินเลียบ<mark>ชายฝั่ง</mark>ตอนพระอาทิตย์ตก">coast</div>
@@ -492,7 +509,7 @@
 
       <!-- Technology & Environment -->
       <section class="category-section" data-category="technology">
-        <h3 class="category-title">Technology & Environment</h3>
+        <h3 class="category-title">Technology & Environment <span class="thai-title">(เทคโนโลยีและสิ่งแวดล้อม)</span></h3>
         <div class="words-container">
           <div class="word-card" data-en="solar panels" data-th="แผงโซลาร์เซลล์" data-example="<mark>Solar panels</mark> produce clean energy." data-th-example="<mark>แผงโซลาร์เซลล์</mark>ผลิตพลังงานสะอาด">solar panels</div>
           <div class="word-card" data-en="nuclear energy" data-th="พลังงานนิวเคลียร์" data-example="<mark>Nuclear energy</mark> is a powerful source of electricity." data-th-example="<mark>พลังงานนิวเคลียร์</mark>เป็นแหล่งพลังงานไฟฟ้าที่มีประสิทธิภาพ">nuclear energy</div>
@@ -511,7 +528,7 @@
 
       <!-- Media & Literature -->
       <section class="category-section" data-category="media">
-        <h3 class="category-title">Media & Literature</h3>
+        <h3 class="category-title">Media & Literature <span class="thai-title">(สื่อและวรรณกรรม)</span></h3>
         <div class="words-container">
           <div class="word-card" data-en="magazines" data-th="นิตยสาร" data-example="She likes to read <mark>magazines</mark>." data-th-example="เธอชอบอ่าน<mark>นิตยสาร</mark>">magazines</div>
           <div class="word-card" data-en="newspapers" data-th="หนังสือพิมพ์" data-example="He buys <mark>newspapers</mark> every morning." data-th-example="เขาซื้อ<mark>หนังสือพิมพ์</mark>ทุกเช้า">newspapers</div>
@@ -534,7 +551,7 @@
 
       <!-- Film & Writing -->
       <section class="category-section" data-category="film">
-        <h3 class="category-title">Film & Writing</h3>
+        <h3 class="category-title">Film & Writing <span class="thai-title">(ภาพยนตร์และการเขียน)</span></h3>
         <div class="words-container">
           <div class="word-card" data-en="effects" data-th="ผลกระทบ" data-example="The movie had amazing special <mark>effects</mark>." data-th-example="หนังเรื่องนี้มี<mark>เอฟเฟกต์</mark>พิเศษที่น่าทึ่ง">effects</div>
           <div class="word-card" data-en="lines" data-th="บรรทัด" data-example="He forgot his <mark>lines</mark> during the play." data-th-example="เขาลืม<mark>บทพูด</mark>ระหว่างการแสดง">lines</div>
@@ -559,7 +576,7 @@
 
       <!-- Education & Learning -->
       <section class="category-section" data-category="education">
-        <h3 class="category-title">Education & Learning</h3>
+        <h3 class="category-title">Education & Learning <span class="thai-title">(การศึกษาและการเรียนรู้)</span></h3>
         <div class="words-container">
           <div class="word-card" data-en="curriculum" data-th="หลักสูตร" data-example="The school has updated its <mark>curriculum</mark> to include more technology subjects." data-th-example="โรงเรียนได้ปรับปรุง<mark>หลักสูตร</mark>ให้รวมวิชาเทคโนโลยีมากขึ้น">curriculum</div>
           <div class="word-card" data-en="assignment" data-th="งานที่ได้รับมอบหมาย" data-example="I need to finish my <mark>assignment</mark> before the deadline." data-th-example="ฉันต้องทำ<mark>งานที่ได้รับมอบหมาย</mark>ให้เสร็จก่อนกำหนดส่ง">assignment</div>
@@ -576,7 +593,7 @@
 
       <!-- Health & Wellness -->
       <section class="category-section" data-category="health">
-        <h3 class="category-title">Health & Wellness</h3>
+        <h3 class="category-title">Health & Wellness <span class="thai-title">(สุขภาพและความเป็นอยู่ที่ดี)</span></h3>
         <div class="words-container">
           <div class="word-card" data-en="nutrition" data-th="โภชนาการ" data-example="Good <mark>nutrition</mark> is essential for maintaining health." data-th-example="<mark>โภชนาการ</mark>ที่ดีมีความสำคัญต่อการรักษาสุขภาพ">nutrition</div>
           <div class="word-card" data-en="exercise" data-th="การออกกำลังกาย" data-example="Regular <mark>exercise</mark> helps improve cardiovascular health." data-th-example="<mark>การออกกำลังกาย</mark>อย่างสม่ำเสมอช่วยปรับปรุงสุขภาพหัวใจและหลอดเลือด">exercise</div>
@@ -593,7 +610,7 @@
 
       <!-- Travel & Transportation -->
       <section class="category-section" data-category="travel">
-        <h3 class="category-title">Travel & Transportation</h3>
+        <h3 class="category-title">Travel & Transportation <span class="thai-title">(การเดินทางและการขนส่ง)</span></h3>
         <div class="words-container">
           <div class="word-card" data-en="passport" data-th="หนังสือเดินทาง" data-example="Make sure your <mark>passport</mark> is valid before traveling internationally." data-th-example="ตรวจสอบให้แน่ใจว่า<mark>หนังสือเดินทาง</mark>ของคุณยังไม่หมดอายุก่อนเดินทางไปต่างประเทศ">passport</div>
           <div class="word-card" data-en="itinerary" data-th="กำหนดการเดินทาง" data-example="Our <mark>itinerary</mark> includes three days in Bangkok and two days in Chiang Mai." data-th-example="<mark>กำหนดการเดินทาง</mark>ของเรารวมถึงสามวันในกรุงเทพฯ และสองวันในเชียงใหม่">itinerary</div>
@@ -610,7 +627,7 @@
 
       <!-- English Tenses Overview -->
       <section class="category-section" data-category="tenses">
-        <h3 class="category-title">English Tenses Overview</h3>
+        <h3 class="category-title">English Tenses Overview <span class="thai-title">(ภาพรวมของกาลในภาษาอังกฤษ)</span></h3>
         <div class="words-container">
           <!-- Present Tenses -->
           <div class="word-card" data-en="Simple Present" data-th="Present Simple" data-example="I <mark>play</mark> football every weekend." data-th-example="ฉัน<mark>เล่น</mark>ฟุตบอลทุกสุดสัปดาห์">Simple Present</div>

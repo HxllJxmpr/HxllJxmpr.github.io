@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>English Pronunciation Guide</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap');
     :root {
       --primary: #6366f1;
       --primary-dark: #4f46e5;
@@ -148,6 +148,21 @@
       background: var(--primary);
       border-radius: 2px;
     }
+    .thai-title {
+      font-family: 'Noto Sans Thai', sans-serif;
+      font-size: 0.9em;
+      color: var(--secondary);
+      margin-left: 0.5rem;
+      font-weight: 500;
+    }
+    .thai-translation {
+      font-family: 'Noto Sans Thai', sans-serif;
+      display: block;
+      margin-top: 0.3rem;
+      color: #ffe0e6;
+      font-size: 0.95rem;
+      font-weight: 400;
+    }
     .pronunciation-section {
       margin-bottom: 1.1rem;
     }
@@ -218,24 +233,69 @@
       font-size: 0.9rem;
       color: var(--accent);
     }
-    .play-button {
-      background: var(--primary);
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 24px;
-      height: 24px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      font-size: 0.8rem;
-      margin-left: 0.5rem;
+    .practice-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      margin-top: 1rem;
     }
-    .play-button:hover {
-      background: var(--primary-dark);
-      transform: scale(1.1);
+    .practice-pair {
+      display: flex;
+      gap: 1.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 1rem;
+    }
+    .practice-word {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      padding: 0.8rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+    .practice-word:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+    .practice-word span:first-child {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+      color: var(--light);
+    }
+    .tongue-twister {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 1rem;
+      transition: all 0.2s ease;
+    }
+    .tongue-twister:hover {
+      background: rgba(255, 255, 255, 0.08);
+      transform: translateY(-2px);
+    }
+    .tongue-twister p:first-child {
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      color: var(--light);
+    }
+    .tongue-twister .play-button {
+      margin: 0.5rem 0;
+    }
+
+    .audio-example {
+      display: flex;
+      align-items: center;
+      margin-top: 0.5rem;
+      padding: 0.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+    }
+    .audio-example-text {
+      margin-right: 0.5rem;
     }
     .tip-box {
       background: rgba(16, 185, 129, 0.1);
@@ -254,6 +314,56 @@
     }
     .tip-title::before {
       content: '💡';
+    }
+    .connection-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+    .connection-card {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+      text-decoration: none;
+      color: var(--light);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: 1px solid var(--glass-border);
+    }
+    .connection-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary);
+    }
+    .connection-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    .connection-title {
+      font-weight: 700;
+      margin-bottom: 0.7rem;
+      color: var(--primary);
+    }
+    .connection-desc {
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+    .practice-routine {
+      padding-left: 1.5rem;
+    }
+    .practice-routine li {
+      margin-bottom: 1rem;
+      line-height: 1.6;
+    }
+    .practice-routine .thai-translation {
+      display: block;
+      margin-top: 0.3rem;
+      padding-left: 0.7rem;
+      border-left: 2px solid var(--secondary);
     }
     @media (max-width: 600px) {
       .container { padding: 1rem 0.2rem 2rem 0.2rem; }
@@ -289,9 +399,9 @@
     <main class="pronunciation-grid">
       <!-- Vowel Sounds -->
       <section class="pronunciation-card">
-        <div class="pronunciation-title">1. Vowel Sounds</div>
+        <div class="pronunciation-title">1. Vowel Sounds <span class="thai-title">(เสียงสระ)</span></div>
         <div class="pronunciation-section">
-          <strong>Short Vowels:</strong> These are quick, short sounds.
+          <strong>Short Vowels:</strong> These are quick, short sounds. <span class="thai-translation">เสียงสระสั้น: เป็นเสียงที่ออกเสียงเร็วและสั้น</span>
         </div>
         <table class="sound-table">
           <tr>
@@ -327,7 +437,7 @@
         </table>
 
         <div class="pronunciation-section">
-          <strong>Long Vowels:</strong> These are extended sounds, often marked with a colon (:) in phonetic symbols.
+          <strong>Long Vowels:</strong> These are extended sounds, often marked with a colon (:) in phonetic symbols. <span class="thai-translation">เสียงสระยาว: เป็นเสียงที่ลากยาวกว่า มักจะมีเครื่องหมายทางสัทศาสตร์เป็นเครื่องหมายทับ (:)</span>
         </div>
         <table class="sound-table">
           <tr>
@@ -378,9 +488,9 @@
 
       <!-- Consonant Sounds -->
       <section class="pronunciation-card">
-        <div class="pronunciation-title">2. Consonant Sounds</div>
+        <div class="pronunciation-title">2. Consonant Sounds <span class="thai-title">(เสียงพยัญชนะ)</span></div>
         <div class="pronunciation-section">
-          <strong>Challenging Consonants:</strong> These are sounds that Thai speakers often find difficult.
+          <strong>Challenging Consonants:</strong> These are sounds that Thai speakers often find difficult. <span class="thai-translation">เสียงพยัญชนะที่ท้าทาย: เสียงเหล่านี้เป็นเสียงที่ผู้พูดภาษาไทยมักพบว่ายากในการออกเสียง</span>
         </div>
         <table class="sound-table">
           <tr>
@@ -428,7 +538,7 @@
         </table>
 
         <div class="pronunciation-section">
-          <strong>Consonant Clusters:</strong> These are groups of consonants that appear together.
+          <strong>Consonant Clusters:</strong> These are groups of consonants that appear together. <span class="thai-translation">กลุ่มพยัญชนะ: เป็นกลุ่มของพยัญชนะที่ปรากฏร่วมกัน ซึ่งในภาษาไทยมักไม่มีกลุ่มพยัญชนะที่ซับซ้อนเหมือนในภาษาอังกฤษ</span>
         </div>
         <ul class="examples">
           <li><mark>str</mark>eet, <mark>str</mark>ong, <mark>str</mark>ange</li>
@@ -454,9 +564,9 @@
 
       <!-- Stress and Intonation -->
       <section class="pronunciation-card">
-        <div class="pronunciation-title">3. Stress and Intonation</div>
+        <div class="pronunciation-title">3. Stress and Intonation <span class="thai-title">(การเน้นเสียงและทำนองเสียง)</span></div>
         <div class="pronunciation-section">
-          <strong>Word Stress:</strong> In English, certain syllables in words are emphasized more than others.
+          <strong>Word Stress:</strong> In English, certain syllables in words are emphasized more than others. <span class="thai-translation">การเน้นเสียงในคำ: ในภาษาอังกฤษ พยางค์บางพยางค์ในคำจะถูกเน้นมากกว่าพยางค์อื่นๆ</span>
         </div>
         <ul class="examples">
           <li><mark>PHO</mark>to<mark>graph</mark> (stress on first syllable)</li>
@@ -467,7 +577,7 @@
         </ul>
 
         <div class="pronunciation-section">
-          <strong>Sentence Stress:</strong> Content words (nouns, verbs, adjectives, adverbs) are usually stressed in sentences, while function words (articles, prepositions, pronouns) are usually unstressed.
+          <strong>Sentence Stress:</strong> Content words (nouns, verbs, adjectives, adverbs) are usually stressed in sentences, while function words (articles, prepositions, pronouns) are usually unstressed. <span class="thai-translation">การเน้นเสียงในประโยค: คำที่มีความหมาย (เช่น คำนาม คำกริยา คำคุณศัพท์) มักจะถูกเน้น ส่วนคำหน้าที่ (เช่น คำนำหน้านาม คำบุพบท คำสรรพนาม) มักจะไม่ถูกเน้น</span>
         </div>
         <ul class="examples">
           <li>I <mark>WANT</mark> to <mark>GO</mark> to the <mark>PARK</mark>.</li>
@@ -476,7 +586,7 @@
         </ul>
 
         <div class="pronunciation-section">
-          <strong>Intonation:</strong> The rise and fall of voice when speaking.
+          <strong>Intonation:</strong> The rise and fall of voice when speaking. <span class="thai-translation">ทำนองเสียง: การขึ้นลงของเสียงเมื่อพูด ช่วยบ่งบอกว่าเป็นคำถาม คำบอกเล่า หรือแสดงอารมณ์</span>
         </div>
         <ul class="examples">
           <li>You're coming? (rising intonation - question)</li>
@@ -498,6 +608,149 @@
           <p style="margin-top:0.5rem;">การฝึกฟังและเลียนแบบการออกเสียงของเจ้าของภาษาเป็นวิธีที่ดีที่สุดในการพัฒนาการออกเสียงภาษาอังกฤษ</p>
         </div>
       </section>
+
+      <!-- Interactive Practice Section -->
+      <section class="pronunciation-card">
+        <div class="pronunciation-title">4. Interactive Practice <span class="thai-title">(แบบฝึกหัดเชิงโต้ตอบ)</span></div>
+        
+        <div class="pronunciation-section">
+          <strong>Minimal Pairs Practice:</strong> These are pairs of words that differ by only one sound. <span class="thai-translation">คู่คำที่แตกต่างกันเพียงเสียงเดียว: เป็นคู่ของคำที่แตกต่างกันเพียงเสียงเดียว ช่วยในการฝึกแยกแยะเสียงที่คล้ายกัน</span>
+        </div>
+
+        <div class="practice-container">
+          <div class="practice-pair">
+            <div class="practice-word">
+              <span>ship</span>
+              <span class="phonetic">/ʃɪp/</span>
+              <span class="thai-translation">เรือ</span>
+            </div>
+            <div class="practice-word">
+              <span>sheep</span>
+              <span class="phonetic">/ʃiːp/</span>
+              <span class="thai-translation">แกะ</span>
+            </div>
+          </div>
+
+          <div class="practice-pair">
+            <div class="practice-word">
+              <span>bit</span>
+              <span class="phonetic">/bɪt/</span>
+              <span class="thai-translation">นิดหน่อย</span>
+            </div>
+            <div class="practice-word">
+              <span>beat</span>
+              <span class="phonetic">/biːt/</span>
+              <span class="thai-translation">ตี, จังหวะ</span>
+            </div>
+          </div>
+
+          <div class="practice-pair">
+            <div class="practice-word">
+              <span>thin</span>
+              <span class="phonetic">/θɪn/</span>
+              <span class="thai-translation">บาง</span>
+            </div>
+            <div class="practice-word">
+              <span>tin</span>
+              <span class="phonetic">/tɪn/</span>
+              <span class="thai-translation">กระป๋องดีบุก</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pronunciation-section" style="margin-top: 1.5rem;">
+          <strong>Tongue Twisters:</strong> Practice these sentences to improve your pronunciation. <span class="thai-translation">ประโยคพันลิ้น: ฝึกประโยคเหล่านี้เพื่อพัฒนาการออกเสียงของคุณ</span>
+        </div>
+
+        <div class="tongue-twister">
+          <p>She sells seashells by the seashore.</p>
+          <p class="thai-translation">เธอขายหอยทะเลริมชายหาด</p>
+        </div>
+
+        <div class="tongue-twister">
+          <p>Peter Piper picked a peck of pickled peppers.</p>
+          <p class="thai-translation">ปีเตอร์ ไพเพอร์เก็บพริกดองหนึ่งถัง</p>
+        </div>
+
+        <div class="tongue-twister">
+          <p>How much wood would a woodchuck chuck if a woodchuck could chuck wood?</p>
+          <p class="thai-translation">กระรอกจะโยนไม้ได้มากแค่ไหนถ้ากระรอกสามารถโยนไม้ได้?</p>
+        </div>
+
+        <div class="tip-box">
+          <div class="tip-title">Practice Tip</div>
+          <p>Record yourself saying these tongue twisters and compare with native speakers. Start slowly and gradually increase your speed as you become more comfortable.</p>
+          <p class="thai-translation">เคล็ดลับการฝึกฝน: บันทึกเสียงตัวเองพูดประโยคพันลิ้นเหล่านี้และเปรียบเทียบกับเจ้าของภาษา เริ่มต้นช้าๆ และค่อยๆ เพิ่มความเร็วเมื่อคุณรู้สึกคุ้นเคยมากขึ้น</p>
+        </div>
+      </section>
+
+      <!-- Connection to Other Learning Resources -->
+      <section class="pronunciation-card">
+        <div class="pronunciation-title">5. Connect Your Learning <span class="thai-title">(เชื่อมโยงการเรียนรู้)</span></div>
+        
+        <div class="pronunciation-section">
+          <strong>Integrated Learning Path:</strong> Connect pronunciation with vocabulary and grammar. <span class="thai-translation">เส้นทางการเรียนรู้แบบบูรณาการ: เชื่อมโยงการออกเสียงกับคำศัพท์และไวยากรณ์</span>
+        </div>
+
+        <div class="connection-grid">
+          <a href="vocabulary_topics.html" class="connection-card">
+            <div class="connection-icon">📚</div>
+            <div class="connection-title">Vocabulary Topics</div>
+            <div class="connection-desc">Practice pronunciation with real vocabulary words</div>
+            <div class="thai-translation">ฝึกการออกเสียงด้วยคำศัพท์จริง</div>
+          </a>
+
+          <a href="grammar_rules.html" class="connection-card">
+            <div class="connection-icon">📝</div>
+            <div class="connection-title">Grammar Rules</div>
+            <div class="connection-desc">Learn how pronunciation affects grammar</div>
+            <div class="thai-translation">เรียนรู้วิธีที่การออกเสียงส่งผลต่อไวยากรณ์</div>
+          </a>
+
+          <a href="index.html" class="connection-card">
+            <div class="connection-icon">🏠</div>
+            <div class="connection-title">Main Dictionary</div>
+            <div class="connection-desc">Look up words and practice their pronunciation</div>
+            <div class="thai-translation">ค้นหาคำศัพท์และฝึกการออกเสียง</div>
+          </a>
+
+          <a href="present_tenses.html" class="connection-card">
+            <div class="connection-icon">⏰</div>
+            <div class="connection-title">Tenses</div>
+            <div class="connection-desc">Practice pronunciation in different tenses</div>
+            <div class="thai-translation">ฝึกการออกเสียงในกาลต่างๆ</div>
+          </a>
+        </div>
+
+        <div class="pronunciation-section" style="margin-top: 1.5rem;">
+          <strong>Daily Practice Routine:</strong> <span class="thai-translation">กิจวัตรการฝึกฝนประจำวัน</span>
+        </div>
+
+        <ol class="practice-routine">
+          <li>
+            <strong>5 minutes:</strong> Vowel and consonant sounds practice
+            <span class="thai-translation">5 นาที: ฝึกเสียงสระและพยัญชนะ</span>
+          </li>
+          <li>
+            <strong>5 minutes:</strong> Minimal pairs discrimination
+            <span class="thai-translation">5 นาที: ฝึกแยกแยะคู่คำที่แตกต่างกันเพียงเสียงเดียว</span>
+          </li>
+          <li>
+            <strong>5 minutes:</strong> Tongue twisters and rhythm practice
+            <span class="thai-translation">5 นาที: ฝึกประโยคพันลิ้นและจังหวะ</span>
+          </li>
+          <li>
+            <strong>10 minutes:</strong> Real conversation practice with vocabulary from this site
+            <span class="thai-translation">10 นาที: ฝึกการสนทนาจริงด้วยคำศัพท์จากเว็บไซต์นี้</span>
+          </li>
+        </ol>
+
+        <div class="tip-box">
+          <div class="tip-title">Learning Tip</div>
+          <p>Consistent practice is more effective than occasional long sessions. Try to practice a little bit every day, and connect what you learn across different sections of this website.</p>
+          <p class="thai-translation">เคล็ดลับการเรียนรู้: การฝึกฝนอย่างสม่ำเสมอมีประสิทธิภาพมากกว่าการฝึกนานๆ ครั้ง พยายามฝึกฝนเล็กน้อยทุกวัน และเชื่อมโยงสิ่งที่คุณเรียนรู้จากส่วนต่างๆ ของเว็บไซต์นี้</p>
+        </div>
+      </section>
     </main>
   </div>
   <script>
@@ -515,7 +768,10 @@
         particlesContainer.appendChild(particle);
       }
     }
-    document.addEventListener('DOMContentLoaded', createParticles);
+
+    document.addEventListener('DOMContentLoaded', () => {
+      createParticles();
+    });
   </script>
 </body>
 </html>
