@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Essential Grammar Rules</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --secondary: #ec4899;
+      --accent: #f59e0b;
+      --success: #10b981;
+      --danger: #ef4444;
+      --dark: #0f172a;
+      --darker: #020617;
+      --light: #f8fafc;
+      --glass: rgba(255, 255, 255, 0.1);
+      --glass-border: rgba(255, 255, 255, 0.2);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 25px 50px rgba(0, 0, 0, 0.15);
+      --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--darker);
+      color: var(--light);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
+      animation: backgroundShift 20s ease-in-out infinite;
+      z-index: -1;
+    }
+    @keyframes backgroundShift {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.1) rotate(1deg); }
+    }
+    .particles { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1; }
+    .particle {
+      position: absolute; width: 4px; height: 4px; background: var(--primary); border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.7; }
+      50% { transform: translateY(-20px) rotate(180deg); opacity: 1; }
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 1rem 3rem 1rem;
+      position: relative;
+      z-index: 1;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .title {
+      font-size: clamp(2.2rem, 7vw, 3.5rem);
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientShift 3s ease-in-out infinite;
+      margin-bottom: 0.7rem;
+      letter-spacing: -0.02em;
+    }
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    .subtitle {
+      font-size: 1.15rem;
+      color: rgba(248, 250, 252, 0.8);
+      font-weight: 400;
+      margin-bottom: 2.5rem;
+    }
+    .nav-link {
+      display: inline-block;
+      margin-bottom: 2.5rem;
+      color: var(--primary);
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 50px;
+      padding: 0.7rem 1.7rem;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(10px);
+    }
+    .nav-link:hover {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+    .grammar-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.2rem;
+    }
+    .grammar-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 2.2rem 1.5rem 2rem 1.5rem;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      animation: fadeIn 0.7s cubic-bezier(.7,-0.2,.5,1.5);
+    }
+    .grammar-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary);
+    }
+    .grammar-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.7rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .grammar-title::before {
+      content: '';
+      width: 4px;
+      height: 20px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+    .grammar-section {
+      margin-bottom: 1.1rem;
+    }
+    .grammar-section strong {
+      color: var(--accent);
+    }
+    .grammar-section em {
+      color: var(--secondary);
+      font-style: normal;
+      font-weight: 600;
+    }
+    .examples {
+      margin-top: 0.7rem;
+      margin-bottom: 0.7rem;
+      padding-left: 1.2rem;
+    }
+    .examples li {
+      margin-bottom: 0.4rem;
+      line-height: 1.6;
+    }
+    .explanation-th {
+      margin-top: 1.2rem;
+      background: rgba(255,255,255,0.07);
+      border-left: 4px solid var(--secondary);
+      border-radius: 12px;
+      padding: 1.1rem 1.2rem 1.1rem 1.5rem;
+      color: #ffe0e6;
+      font-size: 1.05rem;
+      font-weight: 500;
+      box-shadow: 0 2px 12px #ec489933;
+    }
+    mark {
+      background: linear-gradient(120deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 0.2rem 0.4rem;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+    .table-container {
+      overflow-x: auto;
+      margin: 1.5rem 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 0.8rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    th {
+      background: rgba(99, 102, 241, 0.2);
+      color: var(--primary);
+      font-weight: 600;
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.05);
+    }
+    @media (max-width: 600px) {
+      .container { padding: 1rem 0.2rem 2rem 0.2rem; }
+      .grammar-card { padding: 1.2rem 0.7rem 1.2rem 0.7rem; }
+      .grammar-title { font-size: 1.1rem; }
+      th, td { padding: 0.6rem 0.8rem; font-size: 0.9rem; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--primary-dark); }
+  </style>
+</head>
+<body>
+  <div class="particles" id="particles"></div>
+  <div class="container">
+    <header class="header">
+      <h1 class="title">Essential Grammar Rules</h1>
+      <p class="subtitle">Master the fundamental rules of English grammar (with Thai translation)</p>
+      <div style="margin-bottom:2.5rem;">
+        <a href="index.html" class="nav-link" style="margin-right:1rem;">&#8592; Back to Main</a>
+        <a href="present_tenses.html" class="nav-link" style="margin-right:1rem;">Present Tenses</a>
+        <a href="past_tenses.html" class="nav-link" style="margin-right:1rem;">Past Tenses</a>
+        <a href="future_tenses.html" class="nav-link" style="margin-right:1rem;">Future Tenses</a>
+        <a href="vocabulary_topics.html" class="nav-link" style="margin-right:1rem;">Vocabulary Topics</a>
+        <a href="pronunciation_guide.html" class="nav-link">Pronunciation Guide</a>
+      </div>
+    </header>
+    <main class="grammar-grid">
+      <!-- Subject-Verb Agreement -->
+      <section class="grammar-card">
+        <div class="grammar-title">1. Subject-Verb Agreement</div>
+        <div class="grammar-section">
+          <strong>Rule:</strong> The subject and verb in a sentence must agree in number (singular or plural).
+        </div>
+        <ul class="examples">
+          <li>She <mark>walks</mark> to school every day. <span style="color:#aaa">(Singular subject → singular verb)</span></li>
+          <li>They <mark>walk</mark> to school every day. <span style="color:#aaa">(Plural subject → plural verb)</span></li>
+          <li>The team <mark>is</mark> playing well. <span style="color:#aaa">(Collective noun → singular verb)</span></li>
+          <li>My brother and sister <mark>are</mark> coming. <span style="color:#aaa">(Compound subject → plural verb)</span></li>
+        </ul>
+        <div class="explanation-th">
+          <strong>คำอธิบาย (ไทย):</strong><br>
+          ประธานและกริยาในประโยคต้องสอดคล้องกันในเรื่องของจำนวน (เอกพจน์หรือพหูพจน์)<br>
+          <ul class="examples">
+            <li>She <mark>walks</mark> to school every day. (เธอ<mark>เดิน</mark>ไปโรงเรียนทุกวัน) - ประธานเอกพจน์ → กริยาเอกพจน์</li>
+            <li>They <mark>walk</mark> to school every day. (พวกเขา<mark>เดิน</mark>ไปโรงเรียนทุกวัน) - ประธานพหูพจน์ → กริยาพหูพจน์</li>
+            <li>The team <mark>is</mark> playing well. (ทีม<mark>กำลังเล่น</mark>ได้ดี) - คำนามรวม → กริยาเอกพจน์</li>
+            <li>My brother and sister <mark>are</mark> coming. (พี่ชายและพี่สาวของฉัน<mark>กำลังมา</mark>) - ประธานรวม → กริยาพหูพจน์</li>
+          </ul>
+        </div>
+      </section>
+      <!-- Articles -->
+      <section class="grammar-card">
+        <div class="grammar-title">2. Articles (a, an, the)</div>
+        <div class="grammar-section">
+          <strong>Rule:</strong> Use <mark>a/an</mark> for indefinite (non-specific) singular nouns and <mark>the</mark> for definite (specific) nouns.
+        </div>
+        <div class="table-container">
+          <table>
+            <tr>
+              <th>Article</th>
+              <th>Usage</th>
+              <th>Example</th>
+            </tr>
+            <tr>
+              <td><mark>a</mark></td>
+              <td>Before singular nouns beginning with a consonant sound</td>
+              <td>a book, a university (sounds like 'you')</td>
+            </tr>
+            <tr>
+              <td><mark>an</mark></td>
+              <td>Before singular nouns beginning with a vowel sound</td>
+              <td>an apple, an hour (silent 'h')</td>
+            </tr>
+            <tr>
+              <td><mark>the</mark></td>
+              <td>For specific nouns (both singular and plural)</td>
+              <td>the book (that we discussed), the books</td>
+            </tr>
+            <tr>
+              <td>No article</td>
+              <td>For general plural nouns or uncountable nouns</td>
+              <td>Books are important. Water is essential.</td>
+            </tr>
+          </table>
+        </div>
+        <ul class="examples">
+          <li>I need <mark>a</mark> pen. <span style="color:#aaa">(Any pen, not specific)</span></li>
+          <li>Please pass me <mark>the</mark> pen. <span style="color:#aaa">(The specific pen we both know about)</span></li>
+          <li>She is <mark>an</mark> honest person. <span style="color:#aaa">(Starts with vowel sound)</span></li>
+          <li><mark>The</mark> Eiffel Tower is in Paris. <span style="color:#aaa">(Unique/specific landmark)</span></li>
+        </ul>
+        <div class="explanation-th">
+          <strong>คำอธิบาย (ไทย):</strong><br>
+          ใช้ <mark>a/an</mark> สำหรับคำนามเอกพจน์ที่ไม่เฉพาะเจาะจง และใช้ <mark>the</mark> สำหรับคำนามที่เฉพาะเจาะจง<br>
+          <ul class="examples">
+            <li>I need <mark>a</mark> pen. (ฉันต้องการ<mark>ปากกา</mark>) - ปากกาอันไหนก็ได้ ไม่เฉพาะเจาะจง</li>
+            <li>Please pass me <mark>the</mark> pen. (กรุณาส่ง<mark>ปากกา</mark>ให้ฉัน) - ปากกาอันที่เรารู้ว่าเป็นอันไหน</li>
+            <li>She is <mark>an</mark> honest person. (เธอเป็นคนซื่อสัตย์) - ขึ้นต้นด้วยเสียงสระ</li>
+            <li><mark>The</mark> Eiffel Tower is in Paris. (<mark>หอไอเฟล</mark>อยู่ในปารีส) - สถานที่เฉพาะเจาะจง</li>
+          </ul>
+        </div>
+      </section>
+      <!-- Prepositions -->
+      <section class="grammar-card">
+        <div class="grammar-title">3. Prepositions of Time and Place</div>
+        <div class="grammar-section">
+          <strong>Rule:</strong> Use specific prepositions to indicate relationships of time and place.
+        </div>
+        <div class="table-container">
+          <table>
+            <tr>
+              <th>Time Prepositions</th>
+              <th>Usage</th>
+              <th>Example</th>
+            </tr>
+            <tr>
+              <td><mark>at</mark></td>
+              <td>Specific time, point in time</td>
+              <td>at 3 o'clock, at noon, at night</td>
+            </tr>
+            <tr>
+              <td><mark>in</mark></td>
+              <td>Months, years, seasons, parts of day</td>
+              <td>in January, in 2023, in summer, in the morning</td>
+            </tr>
+            <tr>
+              <td><mark>on</mark></td>
+              <td>Days, dates</td>
+              <td>on Monday, on July 4th, on my birthday</td>
+            </tr>
+          </table>
+        </div>
+        <div class="table-container">
+          <table>
+            <tr>
+              <th>Place Prepositions</th>
+              <th>Usage</th>
+              <th>Example</th>
+            </tr>
+            <tr>
+              <td><mark>at</mark></td>
+              <td>Specific point, address</td>
+              <td>at the door, at 123 Main Street</td>
+            </tr>
+            <tr>
+              <td><mark>in</mark></td>
+              <td>Enclosed spaces, larger areas</td>
+              <td>in the room, in London, in Thailand</td>
+            </tr>
+            <tr>
+              <td><mark>on</mark></td>
+              <td>Surface, street, floor</td>
+              <td>on the table, on Main Street, on the 3rd floor</td>
+            </tr>
+          </table>
+        </div>
+        <ul class="examples">
+          <li>The meeting starts <mark>at</mark> 9 AM <mark>on</mark> Monday <mark>in</mark> July.</li>
+          <li>She lives <mark>at</mark> 42 Park Avenue <mark>in</mark> New York.</li>
+          <li>The book is <mark>on</mark> the shelf <mark>in</mark> the living room.</li>
+        </ul>
+        <div class="explanation-th">
+          <strong>คำอธิบาย (ไทย):</strong><br>
+          ใช้คำบุพบทเฉพาะเพื่อแสดงความสัมพันธ์ของเวลาและสถานที่<br>
+          <ul class="examples">
+            <li>The meeting starts <mark>at</mark> 9 AM <mark>on</mark> Monday <mark>in</mark> July. (การประชุมเริ่ม<mark>เวลา</mark> 9 โมงเช้า <mark>ใน</mark>วันจันทร์ <mark>ใน</mark>เดือนกรกฎาคม)</li>
+            <li>She lives <mark>at</mark> 42 Park Avenue <mark>in</mark> New York. (เธออาศัยอยู่<mark>ที่</mark>บ้านเลขที่ 42 ถนนพาร์ค <mark>ใน</mark>นิวยอร์ก)</li>
+            <li>The book is <mark>on</mark> the shelf <mark>in</mark> the living room. (หนังสืออยู่<mark>บน</mark>ชั้นวาง <mark>ใน</mark>ห้องนั่งเล่น)</li>
+          </ul>
+        </div>
+      </section>
+      <!-- Conditionals -->
+      <section class="grammar-card">
+        <div class="grammar-title">4. Conditional Sentences</div>
+        <div class="grammar-section">
+          <strong>Rule:</strong> Conditional sentences express a condition and its result. There are four main types.
+        </div>
+        <div class="table-container">
+          <table>
+            <tr>
+              <th>Type</th>
+              <th>Structure</th>
+              <th>Example</th>
+              <th>Meaning</th>
+            </tr>
+            <tr>
+              <td>Zero Conditional</td>
+              <td>If + present simple, present simple</td>
+              <td>If you heat water, it boils.</td>
+              <td>General truth, scientific fact</td>
+            </tr>
+            <tr>
+              <td>First Conditional</td>
+              <td>If + present simple, will + infinitive</td>
+              <td>If it rains, I will stay home.</td>
+              <td>Possible future situation</td>
+            </tr>
+            <tr>
+              <td>Second Conditional</td>
+              <td>If + past simple, would + infinitive</td>
+              <td>If I had money, I would travel.</td>
+              <td>Hypothetical present/future situation</td>
+            </tr>
+            <tr>
+              <td>Third Conditional</td>
+              <td>If + past perfect, would have + past participle</td>
+              <td>If I had studied, I would have passed.</td>
+              <td>Hypothetical past situation (impossible)</td>
+            </tr>
+          </table>
+        </div>
+        <ul class="examples">
+          <li><mark>If you study hard, you will pass the exam.</mark> <span style="color:#aaa">(First conditional - real possibility)</span></li>
+          <li><mark>If I were rich, I would buy a yacht.</mark> <span style="color:#aaa">(Second conditional - unlikely/imaginary)</span></li>
+          <li><mark>If she had called me, I would have picked her up.</mark> <span style="color:#aaa">(Third conditional - impossible past)</span></li>
+        </ul>
+        <div class="explanation-th">
+          <strong>คำอธิบาย (ไทย):</strong><br>
+          ประโยคเงื่อนไขแสดงเงื่อนไขและผลลัพธ์ มีสี่ประเภทหลัก<br>
+          <ul class="examples">
+            <li><mark>If you study hard, you will pass the exam.</mark> (ถ้าคุณเรียนหนัก คุณจะสอบผ่าน) - เงื่อนไขแบบที่หนึ่ง - ความเป็นไปได้จริง</li>
+            <li><mark>If I were rich, I would buy a yacht.</mark> (ถ้าฉันรวย ฉันจะซื้อเรือยอชต์) - เงื่อนไขแบบที่สอง - ไม่น่าจะเป็นไปได้/จินตนาการ</li>
+            <li><mark>If she had called me, I would have picked her up.</mark> (ถ้าเธอโทรหาฉัน ฉันคงไปรับเธอแล้ว) - เงื่อนไขแบบที่สาม - เป็นไปไม่ได้ในอดีต</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script>
+    // Floating particles
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = 40;
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 6 + 's';
+        particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+        particlesContainer.appendChild(particle);
+      }
+    }
+    document.addEventListener('DOMContentLoaded', createParticles);
+  </script>
+</body>
+</html>

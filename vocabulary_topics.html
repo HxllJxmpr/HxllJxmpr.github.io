@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vocabulary by Topic</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --secondary: #ec4899;
+      --accent: #f59e0b;
+      --success: #10b981;
+      --danger: #ef4444;
+      --dark: #0f172a;
+      --darker: #020617;
+      --light: #f8fafc;
+      --glass: rgba(255, 255, 255, 0.1);
+      --glass-border: rgba(255, 255, 255, 0.2);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 25px 50px rgba(0, 0, 0, 0.15);
+      --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--darker);
+      color: var(--light);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
+      animation: backgroundShift 20s ease-in-out infinite;
+      z-index: -1;
+    }
+    @keyframes backgroundShift {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.1) rotate(1deg); }
+    }
+    .particles { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1; }
+    .particle {
+      position: absolute; width: 4px; height: 4px; background: var(--primary); border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.7; }
+      50% { transform: translateY(-20px) rotate(180deg); opacity: 1; }
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 1rem 3rem 1rem;
+      position: relative;
+      z-index: 1;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .title {
+      font-size: clamp(2.2rem, 7vw, 3.5rem);
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientShift 3s ease-in-out infinite;
+      margin-bottom: 0.7rem;
+      letter-spacing: -0.02em;
+    }
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    .subtitle {
+      font-size: 1.15rem;
+      color: rgba(248, 250, 252, 0.8);
+      font-weight: 400;
+      margin-bottom: 2.5rem;
+    }
+    .nav-link {
+      display: inline-block;
+      margin-bottom: 2.5rem;
+      color: var(--primary);
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 50px;
+      padding: 0.7rem 1.7rem;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(10px);
+    }
+    .nav-link:hover {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+    .topic-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .topic-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 1.8rem 1.5rem 1.5rem 1.5rem;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      animation: fadeIn 0.7s cubic-bezier(.7,-0.2,.5,1.5);
+      animation-fill-mode: both;
+      animation-delay: calc(var(--delay) * 0.1s);
+    }
+    .topic-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary);
+    }
+    .topic-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .topic-title::before {
+      content: '';
+      width: 4px;
+      height: 20px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+    .vocab-list {
+      list-style: none;
+    }
+    .vocab-item {
+      margin-bottom: 0.8rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .vocab-item:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+    .vocab-en {
+      font-weight: 600;
+      color: var(--light);
+    }
+    .vocab-th {
+      color: rgba(248, 250, 252, 0.7);
+      font-size: 0.95rem;
+    }
+    .vocab-item:hover .vocab-en {
+      color: var(--accent);
+    }
+    .vocab-item:hover .vocab-th {
+      color: var(--secondary);
+    }
+    .search-container {
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: center;
+    }
+    .search-input {
+      width: 100%;
+      max-width: 500px;
+      padding: 0.8rem 1.5rem;
+      border-radius: 50px;
+      border: 1px solid var(--glass-border);
+      background: var(--glass);
+      color: var(--light);
+      font-size: 1rem;
+      font-family: inherit;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+    .search-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
+    }
+    .search-input::placeholder {
+      color: rgba(248, 250, 252, 0.5);
+    }
+    @media (max-width: 768px) {
+      .topic-grid { grid-template-columns: 1fr; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--primary-dark); }
+  </style>
+</head>
+<body>
+  <div class="particles" id="particles"></div>
+  <div class="container">
+    <header class="header">
+      <h1 class="title">Vocabulary by Topic</h1>
+      <p class="subtitle">Expand your English vocabulary with these essential words by topic</p>
+      <div style="margin-bottom:2.5rem;">
+        <a href="index.html" class="nav-link" style="margin-right:1rem;">&#8592; Back to Main</a>
+        <a href="grammar_rules.html" class="nav-link" style="margin-right:1rem;">Grammar Rules</a>
+        <a href="present_tenses.html" class="nav-link" style="margin-right:1rem;">Present Tenses</a>
+        <a href="past_tenses.html" class="nav-link" style="margin-right:1rem;">Past Tenses</a>
+        <a href="future_tenses.html" class="nav-link" style="margin-right:1rem;">Future Tenses</a>
+        <a href="pronunciation_guide.html" class="nav-link">Pronunciation Guide</a>
+      </div>
+    </header>
+
+    <div class="search-container">
+      <input type="text" class="search-input" placeholder="Search for vocabulary..." id="search-input">
+    </div>
+
+    <main class="topic-grid">
+      <!-- Business & Work -->
+      <section class="topic-card" style="--delay:1;">
+        <div class="topic-title">Business & Work</div>
+        <ul class="vocab-list">
+          <li class="vocab-item"><span class="vocab-en">deadline</span> <span class="vocab-th">กำหนดส่งงาน</span></li>
+          <li class="vocab-item"><span class="vocab-en">negotiate</span> <span class="vocab-th">เจรจาต่อรอง</span></li>
+          <li class="vocab-item"><span class="vocab-en">colleague</span> <span class="vocab-th">เพื่อนร่วมงาน</span></li>
+          <li class="vocab-item"><span class="vocab-en">promotion</span> <span class="vocab-th">การเลื่อนตำแหน่ง</span></li>
+          <li class="vocab-item"><span class="vocab-en">resume</span> <span class="vocab-th">ประวัติย่อ</span></li>
+          <li class="vocab-item"><span class="vocab-en">interview</span> <span class="vocab-th">สัมภาษณ์</span></li>
+          <li class="vocab-item"><span class="vocab-en">salary</span> <span class="vocab-th">เงินเดือน</span></li>
+        </ul>
+      </section>
+
+      <!-- Travel & Transportation -->
+      <section class="topic-card" style="--delay:2;">
+        <div class="topic-title">Travel & Transportation</div>
+        <ul class="vocab-list">
+          <li class="vocab-item"><span class="vocab-en">passport</span> <span class="vocab-th">หนังสือเดินทาง</span></li>
+          <li class="vocab-item"><span class="vocab-en">itinerary</span> <span class="vocab-th">กำหนดการเดินทาง</span></li>
+          <li class="vocab-item"><span class="vocab-en">accommodation</span> <span class="vocab-th">ที่พัก</span></li>
+          <li class="vocab-item"><span class="vocab-en">departure</span> <span class="vocab-th">การออกเดินทาง</span></li>
+          <li class="vocab-item"><span class="vocab-en">arrival</span> <span class="vocab-th">การมาถึง</span></li>
+          <li class="vocab-item"><span class="vocab-en">luggage</span> <span class="vocab-th">กระเป๋าเดินทาง</span></li>
+          <li class="vocab-item"><span class="vocab-en">reservation</span> <span class="vocab-th">การจอง</span></li>
+        </ul>
+      </section>
+
+      <!-- Health & Medicine -->
+      <section class="topic-card" style="--delay:3;">
+        <div class="topic-title">Health & Medicine</div>
+        <ul class="vocab-list">
+          <li class="vocab-item"><span class="vocab-en">prescription</span> <span class="vocab-th">ใบสั่งยา</span></li>
+          <li class="vocab-item"><span class="vocab-en">symptoms</span> <span class="vocab-th">อาการ</span></li>
+          <li class="vocab-item"><span class="vocab-en">diagnosis</span> <span class="vocab-th">การวินิจฉัยโรค</span></li>
+          <li class="vocab-item"><span class="vocab-en">treatment</span> <span class="vocab-th">การรักษา</span></li>
+          <li class="vocab-item"><span class="vocab-en">recovery</span> <span class="vocab-th">การฟื้นตัว</span></li>
+          <li class="vocab-item"><span class="vocab-en">appointment</span> <span class="vocab-th">การนัดหมาย</span></li>
+          <li class="vocab-item"><span class="vocab-en">vaccination</span> <span class="vocab-th">การฉีดวัคซีน</span></li>
+        </ul>
+      </section>
+
+      <!-- Food & Cooking -->
+      <section class="topic-card" style="--delay:4;">
+        <div class="topic-title">Food & Cooking</div>
+        <ul class="vocab-list">
+          <li class="vocab-item"><span class="vocab-en">ingredient</span> <span class="vocab-th">ส่วนผสม</span></li>
+          <li class="vocab-item"><span class="vocab-en">recipe</span> <span class="vocab-th">สูตรอาหาร</span></li>
+          <li class="vocab-item"><span class="vocab-en">appetizer</span> <span class="vocab-th">อาหารเรียกน้ำย่อย</span></li>
+          <li class="vocab-item"><span class="vocab-en">dessert</span> <span class="vocab-th">ของหวาน</span></li>
+          <li class="vocab-item"><span class="vocab-en">seasoning</span> <span class="vocab-th">เครื่องปรุงรส</span></li>
+          <li class="vocab-item"><span class="vocab-en">cuisine</span> <span class="vocab-th">อาหารประจำชาติ</span></li>
+          <li class="vocab-item"><span class="vocab-en">delicious</span> <span class="vocab-th">อร่อย</span></li>
+        </ul>
+      </section>
+
+      <!-- Education & Learning -->
+      <section class="topic-card" style="--delay:5;">
+        <div class="topic-title">Education & Learning</div>
+        <ul class="vocab-list">
+          <li class="vocab-item"><span class="vocab-en">assignment</span> <span class="vocab-th">งานที่ได้รับมอบหมาย</span></li>
+          <li class="vocab-item"><span class="vocab-en">curriculum</span> <span class="vocab-th">หลักสูตร</span></li>
+          <li class="vocab-item"><span class="vocab-en">semester</span> <span class="vocab-th">ภาคเรียน</span></li>
+          <li class="vocab-item"><span class="vocab-en">graduation</span> <span class="vocab-th">การสำเร็จการศึกษา</span></li>
+          <li class="vocab-item"><span class="vocab-en">scholarship</span> <span class="vocab-th">ทุนการศึกษา</span></li>
+          <li class="vocab-item"><span class="vocab-en">lecture</span> <span class="vocab-th">การบรรยาย</span></li>
+          <li class="vocab-item"><span class="vocab-en">research</span> <span class="vocab-th">การวิจัย</span></li>
+        </ul>
+      </section>
+
+      <!-- Technology & Internet -->
+      <section class="topic-card" style="--delay:6;">
+        <div class="topic-title">Technology & Internet</div>
+        <ul class="vocab-list">
+          <li class="vocab-item"><span class="vocab-en">software</span> <span class="vocab-th">ซอฟต์แวร์</span></li>
+          <li class="vocab-item"><span class="vocab-en">hardware</span> <span class="vocab-th">ฮาร์ดแวร์</span></li>
+          <li class="vocab-item"><span class="vocab-en">download</span> <span class="vocab-th">ดาวน์โหลด</span></li>
+          <li class="vocab-item"><span class="vocab-en">upload</span> <span class="vocab-th">อัพโหลด</span></li>
+          <li class="vocab-item"><span class="vocab-en">browser</span> <span class="vocab-th">เบราว์เซอร์</span></li>
+          <li class="vocab-item"><span class="vocab-en">cybersecurity</span> <span class="vocab-th">ความปลอดภัยทางไซเบอร์</span></li>
+          <li class="vocab-item"><span class="vocab-en">artificial intelligence</span> <span class="vocab-th">ปัญญาประดิษฐ์</span></li>
+        </ul>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Floating particles
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = 40;
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 6 + 's';
+        particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+        particlesContainer.appendChild(particle);
+      }
+    }
+
+    // Search functionality
+    function initSearch() {
+      const searchInput = document.getElementById('search-input');
+      const vocabItems = document.querySelectorAll('.vocab-item');
+      const topicCards = document.querySelectorAll('.topic-card');
+
+      searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase().trim();
+
+        if (searchTerm === '') {
+          // Show all items if search is empty
+          vocabItems.forEach(item => item.style.display = '');
+          topicCards.forEach(card => card.style.display = '');
+          return;
+        }
+
+        // Hide all cards initially
+        topicCards.forEach(card => card.style.display = 'none');
+
+        // Check each vocab item
+        vocabItems.forEach(item => {
+          const english = item.querySelector('.vocab-en').textContent.toLowerCase();
+          const thai = item.querySelector('.vocab-th').textContent.toLowerCase();
+          
+          if (english.includes(searchTerm) || thai.includes(searchTerm)) {
+            item.style.display = '';
+            // Show the parent card
+            item.closest('.topic-card').style.display = '';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+
+        // Check if any cards have no visible items and hide them
+        topicCards.forEach(card => {
+          const visibleItems = card.querySelectorAll('.vocab-item[style="display: none;"]');
+          if (visibleItems.length === card.querySelectorAll('.vocab-item').length) {
+            card.style.display = 'none';
+          } else {
+            card.style.display = '';
+          }
+        });
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      createParticles();
+      initSearch();
+    });
+  </script>
+</body>
+</html>

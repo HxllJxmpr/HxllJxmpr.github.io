@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>English Pronunciation Guide</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --secondary: #ec4899;
+      --accent: #f59e0b;
+      --success: #10b981;
+      --danger: #ef4444;
+      --dark: #0f172a;
+      --darker: #020617;
+      --light: #f8fafc;
+      --glass: rgba(255, 255, 255, 0.1);
+      --glass-border: rgba(255, 255, 255, 0.2);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 25px 50px rgba(0, 0, 0, 0.15);
+      --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--darker);
+      color: var(--light);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
+      animation: backgroundShift 20s ease-in-out infinite;
+      z-index: -1;
+    }
+    @keyframes backgroundShift {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.1) rotate(1deg); }
+    }
+    .particles { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -1; }
+    .particle {
+      position: absolute; width: 4px; height: 4px; background: var(--primary); border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.7; }
+      50% { transform: translateY(-20px) rotate(180deg); opacity: 1; }
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 1rem 3rem 1rem;
+      position: relative;
+      z-index: 1;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .title {
+      font-size: clamp(2.2rem, 7vw, 3.5rem);
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientShift 3s ease-in-out infinite;
+      margin-bottom: 0.7rem;
+      letter-spacing: -0.02em;
+    }
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    .subtitle {
+      font-size: 1.15rem;
+      color: rgba(248, 250, 252, 0.8);
+      font-weight: 400;
+      margin-bottom: 2.5rem;
+    }
+    .nav-link {
+      display: inline-block;
+      margin-bottom: 2.5rem;
+      color: var(--primary);
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 50px;
+      padding: 0.7rem 1.7rem;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(10px);
+    }
+    .nav-link:hover {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+    .pronunciation-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.2rem;
+    }
+    .pronunciation-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 2.2rem 1.5rem 2rem 1.5rem;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      animation: fadeIn 0.7s cubic-bezier(.7,-0.2,.5,1.5);
+    }
+    .pronunciation-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary);
+    }
+    .pronunciation-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.7rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .pronunciation-title::before {
+      content: '';
+      width: 4px;
+      height: 20px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+    .pronunciation-section {
+      margin-bottom: 1.1rem;
+    }
+    .pronunciation-section strong {
+      color: var(--accent);
+    }
+    .pronunciation-section em {
+      color: var(--secondary);
+      font-style: normal;
+      font-weight: 600;
+    }
+    .examples {
+      margin-top: 0.7rem;
+      margin-bottom: 0.7rem;
+      padding-left: 1.2rem;
+    }
+    .examples li {
+      margin-bottom: 0.4rem;
+      line-height: 1.6;
+    }
+    .explanation-th {
+      margin-top: 1.2rem;
+      background: rgba(255,255,255,0.07);
+      border-left: 4px solid var(--secondary);
+      border-radius: 12px;
+      padding: 1.1rem 1.2rem 1.1rem 1.5rem;
+      color: #ffe0e6;
+      font-size: 1.05rem;
+      font-weight: 500;
+      box-shadow: 0 2px 12px #ec489933;
+    }
+    mark {
+      background: linear-gradient(120deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 0.2rem 0.4rem;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+    .sound-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .sound-table th, .sound-table td {
+      padding: 0.8rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .sound-table th {
+      background: rgba(99, 102, 241, 0.2);
+      color: var(--primary);
+      font-weight: 600;
+    }
+    .sound-table tr:last-child td {
+      border-bottom: none;
+    }
+    .sound-table tr:hover td {
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .phonetic {
+      font-family: monospace;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      color: var(--accent);
+    }
+    .play-button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 0.8rem;
+      margin-left: 0.5rem;
+    }
+    .play-button:hover {
+      background: var(--primary-dark);
+      transform: scale(1.1);
+    }
+    .tip-box {
+      background: rgba(16, 185, 129, 0.1);
+      border-left: 4px solid var(--success);
+      border-radius: 12px;
+      padding: 1.1rem 1.2rem;
+      margin: 1.5rem 0;
+    }
+    .tip-title {
+      color: var(--success);
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .tip-title::before {
+      content: '💡';
+    }
+    @media (max-width: 600px) {
+      .container { padding: 1rem 0.2rem 2rem 0.2rem; }
+      .pronunciation-card { padding: 1.2rem 0.7rem 1.2rem 0.7rem; }
+      .pronunciation-title { font-size: 1.1rem; }
+      .sound-table th, .sound-table td { padding: 0.6rem 0.8rem; font-size: 0.9rem; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--primary-dark); }
+  </style>
+</head>
+<body>
+  <div class="particles" id="particles"></div>
+  <div class="container">
+    <header class="header">
+      <h1 class="title">English Pronunciation Guide</h1>
+      <p class="subtitle">Master the sounds of English with this comprehensive guide (with Thai explanations)</p>
+      <div style="margin-bottom:2.5rem;">
+        <a href="index.html" class="nav-link" style="margin-right:1rem;">&#8592; Back to Main</a>
+        <a href="vocabulary_topics.html" class="nav-link" style="margin-right:1rem;">Vocabulary Topics</a>
+        <a href="grammar_rules.html" class="nav-link" style="margin-right:1rem;">Grammar Rules</a>
+        <a href="present_tenses.html" class="nav-link" style="margin-right:1rem;">Present Tenses</a>
+        <a href="past_tenses.html" class="nav-link" style="margin-right:1rem;">Past Tenses</a>
+        <a href="future_tenses.html" class="nav-link">Future Tenses</a>
+      </div>
+    </header>
+    <main class="pronunciation-grid">
+      <!-- Vowel Sounds -->
+      <section class="pronunciation-card">
+        <div class="pronunciation-title">1. Vowel Sounds</div>
+        <div class="pronunciation-section">
+          <strong>Short Vowels:</strong> These are quick, short sounds.
+        </div>
+        <table class="sound-table">
+          <tr>
+            <th>Sound</th>
+            <th>Phonetic Symbol</th>
+            <th>Examples</th>
+          </tr>
+          <tr>
+            <td>Short 'a'</td>
+            <td><span class="phonetic">/æ/</span></td>
+            <td>cat, hat, map, apple</td>
+          </tr>
+          <tr>
+            <td>Short 'e'</td>
+            <td><span class="phonetic">/e/</span></td>
+            <td>bed, red, head, many</td>
+          </tr>
+          <tr>
+            <td>Short 'i'</td>
+            <td><span class="phonetic">/ɪ/</span></td>
+            <td>sit, fit, big, win</td>
+          </tr>
+          <tr>
+            <td>Short 'o'</td>
+            <td><span class="phonetic">/ɒ/</span></td>
+            <td>hot, pot, dog, stop</td>
+          </tr>
+          <tr>
+            <td>Short 'u'</td>
+            <td><span class="phonetic">/ʌ/</span></td>
+            <td>cup, luck, bus, money</td>
+          </tr>
+        </table>
+
+        <div class="pronunciation-section">
+          <strong>Long Vowels:</strong> These are extended sounds, often marked with a colon (:) in phonetic symbols.
+        </div>
+        <table class="sound-table">
+          <tr>
+            <th>Sound</th>
+            <th>Phonetic Symbol</th>
+            <th>Examples</th>
+          </tr>
+          <tr>
+            <td>Long 'a'</td>
+            <td><span class="phonetic">/eɪ/</span></td>
+            <td>day, say, make, rain</td>
+          </tr>
+          <tr>
+            <td>Long 'e'</td>
+            <td><span class="phonetic">/iː/</span></td>
+            <td>see, tree, me, people</td>
+          </tr>
+          <tr>
+            <td>Long 'i'</td>
+            <td><span class="phonetic">/aɪ/</span></td>
+            <td>my, fly, time, like</td>
+          </tr>
+          <tr>
+            <td>Long 'o'</td>
+            <td><span class="phonetic">/əʊ/</span></td>
+            <td>go, no, home, know</td>
+          </tr>
+          <tr>
+            <td>Long 'u'</td>
+            <td><span class="phonetic">/uː/</span></td>
+            <td>blue, true, food, moon</td>
+          </tr>
+        </table>
+
+        <div class="tip-box">
+          <div class="tip-title">Pronunciation Tip</div>
+          <p>When practicing vowel sounds, exaggerate the mouth position at first. For example, really stretch your lips wide for the /iː/ sound in "see" and round them significantly for the /uː/ sound in "blue".</p>
+        </div>
+
+        <div class="explanation-th">
+          <strong>คำอธิบาย (ไทย):</strong><br>
+          เสียงสระในภาษาอังกฤษแบ่งเป็นสระเสียงสั้นและสระเสียงยาว<br>
+          <strong>สระเสียงสั้น:</strong> เป็นเสียงที่ออกเสียงเร็วและสั้น<br>
+          <strong>สระเสียงยาว:</strong> เป็นเสียงที่ลากยาวกว่า มักจะมีเครื่องหมายทางสัทศาสตร์เป็นเครื่องหมายทับ (:)<br>
+          <p style="margin-top:0.5rem;">การฝึกออกเสียงสระให้ถูกต้องเป็นสิ่งสำคัญมากในการพูดภาษาอังกฤษให้ชัดเจน ลองสังเกตตำแหน่งของปากและลิ้นเมื่อออกเสียงสระต่างๆ</p>
+        </div>
+      </section>
+
+      <!-- Consonant Sounds -->
+      <section class="pronunciation-card">
+        <div class="pronunciation-title">2. Consonant Sounds</div>
+        <div class="pronunciation-section">
+          <strong>Challenging Consonants:</strong> These are sounds that Thai speakers often find difficult.
+        </div>
+        <table class="sound-table">
+          <tr>
+            <th>Sound</th>
+            <th>Phonetic Symbol</th>
+            <th>Examples</th>
+            <th>Common Errors</th>
+          </tr>
+          <tr>
+            <td>'th' (voiced)</td>
+            <td><span class="phonetic">/ð/</span></td>
+            <td>the, this, that, those</td>
+            <td>Often pronounced as 'd'</td>
+          </tr>
+          <tr>
+            <td>'th' (unvoiced)</td>
+            <td><span class="phonetic">/θ/</span></td>
+            <td>think, three, mouth, bath</td>
+            <td>Often pronounced as 't'</td>
+          </tr>
+          <tr>
+            <td>'v'</td>
+            <td><span class="phonetic">/v/</span></td>
+            <td>very, love, five, have</td>
+            <td>Often confused with 'w'</td>
+          </tr>
+          <tr>
+            <td>'z'</td>
+            <td><span class="phonetic">/z/</span></td>
+            <td>zoo, lazy, buzz, zero</td>
+            <td>Often pronounced as 's'</td>
+          </tr>
+          <tr>
+            <td>'r'</td>
+            <td><span class="phonetic">/r/</span></td>
+            <td>red, very, sorry, right</td>
+            <td>Different from Thai 'r'</td>
+          </tr>
+          <tr>
+            <td>'l'</td>
+            <td><span class="phonetic">/l/</span></td>
+            <td>love, hello, feel, light</td>
+            <td>Different from Thai 'l'</td>
+          </tr>
+        </table>
+
+        <div class="pronunciation-section">
+          <strong>Consonant Clusters:</strong> These are groups of consonants that appear together.
+        </div>
+        <ul class="examples">
+          <li><mark>str</mark>eet, <mark>str</mark>ong, <mark>str</mark>ange</li>
+          <li><mark>spl</mark>ash, <mark>spl</mark>it, <mark>spl</mark>endid</li>
+          <li>a<mark>sks</mark>, de<mark>sks</mark>, ta<mark>sks</mark></li>
+          <li><mark>thr</mark>ee, <mark>thr</mark>ow, <mark>thr</mark>ough</li>
+        </ul>
+
+        <div class="tip-box">
+          <div class="tip-title">Pronunciation Tip</div>
+          <p>For the 'th' sounds, place the tip of your tongue between your teeth and blow air out. For /θ/ (as in "think"), don't use your voice. For /ð/ (as in "the"), use your voice.</p>
+        </div>
+
+        <div class="explanation-th">
+          <strong>คำอธิบาย (ไทย):</strong><br>
+          เสียงพยัญชนะบางเสียงในภาษาอังกฤษอาจเป็นเรื่องยากสำหรับคนไทย โดยเฉพาะเสียงที่ไม่มีในภาษาไทย<br>
+          <strong>เสียง 'th':</strong> มีสองแบบคือแบบก้อง (/ð/) และแบบไม่ก้อง (/θ/) ให้วางปลายลิ้นระหว่างฟันบนและล่าง<br>
+          <strong>เสียง 'v':</strong> ให้วางฟันบนริมฝีปากล่างและทำเสียงก้อง ต่างจากเสียง 'w' ที่ห่อปาก<br>
+          <strong>เสียง 'z':</strong> คล้ายเสียง 's' แต่มีการสั่นของเส้นเสียง<br>
+          <p style="margin-top:0.5rem;">การฝึกออกเสียงกลุ่มพยัญชนะ (consonant clusters) เป็นสิ่งสำคัญเพราะในภาษาไทยมักไม่มีกลุ่มพยัญชนะที่ซับซ้อนเหมือนในภาษาอังกฤษ</p>
+        </div>
+      </section>
+
+      <!-- Stress and Intonation -->
+      <section class="pronunciation-card">
+        <div class="pronunciation-title">3. Stress and Intonation</div>
+        <div class="pronunciation-section">
+          <strong>Word Stress:</strong> In English, certain syllables in words are emphasized more than others.
+        </div>
+        <ul class="examples">
+          <li><mark>PHO</mark>to<mark>graph</mark> (stress on first syllable)</li>
+          <li>pho<mark>TO</mark>graphy (stress on second syllable)</li>
+          <li>photo<mark>GRA</mark>phic (stress on third syllable)</li>
+          <li><mark>IN</mark>terest (stress on first syllable)</li>
+          <li>in<mark>TER</mark>esting (stress on second syllable)</li>
+        </ul>
+
+        <div class="pronunciation-section">
+          <strong>Sentence Stress:</strong> Content words (nouns, verbs, adjectives, adverbs) are usually stressed in sentences, while function words (articles, prepositions, pronouns) are usually unstressed.
+        </div>
+        <ul class="examples">
+          <li>I <mark>WANT</mark> to <mark>GO</mark> to the <mark>PARK</mark>.</li>
+          <li>She <mark>LIVES</mark> in a <mark>BEAUTIFUL</mark> <mark>HOUSE</mark>.</li>
+          <li><mark>WHAT</mark> are you <mark>DOING</mark> <mark>LATER</mark>?</li>
+        </ul>
+
+        <div class="pronunciation-section">
+          <strong>Intonation:</strong> The rise and fall of voice when speaking.
+        </div>
+        <ul class="examples">
+          <li>You're coming? (rising intonation - question)</li>
+          <li>You're coming. (falling intonation - statement)</li>
+          <li>Wow! (rising-falling intonation - excitement)</li>
+        </ul>
+
+        <div class="tip-box">
+          <div class="tip-title">Pronunciation Tip</div>
+          <p>Listen to native speakers and try to mimic not just the sounds but also the rhythm and melody of their speech. Watching English movies or TV shows with subtitles can help you connect the written words with their natural pronunciation.</p>
+        </div>
+
+        <div class="explanation-th">
+          <strong>คำอธิบาย (ไทย):</strong><br>
+          การเน้นเสียงและทำนองเสียงเป็นส่วนสำคัญของการออกเสียงภาษาอังกฤษ<br>
+          <strong>การเน้นเสียงในคำ:</strong> ในภาษาอังกฤษ พยางค์บางพยางค์ในคำจะถูกเน้นมากกว่าพยางค์อื่นๆ<br>
+          <strong>การเน้นเสียงในประโยค:</strong> คำที่มีความหมาย (เช่น คำนาม คำกริยา คำคุณศัพท์) มักจะถูกเน้น ส่วนคำหน้าที่ (เช่น คำนำหน้านาม คำบุพบท คำสรรพนาม) มักจะไม่ถูกเน้น<br>
+          <strong>ทำนองเสียง:</strong> การขึ้นลงของเสียงเมื่อพูด ช่วยบ่งบอกว่าเป็นคำถาม คำบอกเล่า หรือแสดงอารมณ์<br>
+          <p style="margin-top:0.5rem;">การฝึกฟังและเลียนแบบการออกเสียงของเจ้าของภาษาเป็นวิธีที่ดีที่สุดในการพัฒนาการออกเสียงภาษาอังกฤษ</p>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script>
+    // Floating particles
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = 40;
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 6 + 's';
+        particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+        particlesContainer.appendChild(particle);
+      }
+    }
+    document.addEventListener('DOMContentLoaded', createParticles);
+  </script>
+</body>
+</html>
